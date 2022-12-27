@@ -1,0 +1,46 @@
+html, body {
+    margin: 0;
+    /* overflow: hidden; */
+}
+
+.LoginPage {
+    box-sizing: border-box;
+    background-color: #13181B;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    /* color: #4D3B18; */
+}
+
+.Login-Text {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 0;
+    font-size: 2em;
+    font-weight: 600;
+    padding-bottom: 5%;
+}
+
+.Login-Container {
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.Login-Form {
+    background-color: #EDB852;
+    margin: 0;
+    padding: 2em 3em;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    overflow: hidden;
+}
