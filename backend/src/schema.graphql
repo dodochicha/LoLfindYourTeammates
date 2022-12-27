@@ -1,0 +1,90 @@
+scalar Date
+
+enum Category {
+  FOOD
+  TRANSPORT
+  HOUSING
+  UTILITIES
+  HEALTH
+  ENTERTAINMENT
+  CLOTHING
+  EDUCATION
+  OTHER
+  INCOME
+}
+
+type Item {
+  id: ID!
+  name: String!
+  amount: Int!
+  category: String!
+  date: Date!
+  description: String
+}
+
+type Player {
+  id: ID!
+  name: String!
+  lane: [String!]!
+  heros: [String!]!
+  rank: String!
+}
+
+type Query {
+  items: [Item!]!
+  players: [Player!]!
+}
+
+input CreateItemInput {
+  id: ID!
+  name: String!
+  amount: Int!
+  category: String!
+  date: Date!
+  description: String
+}
+
+input UpdateItemInput {
+  id: ID!
+  name: String
+  amount: Int
+  category: String
+  date: Date
+  description: String
+}
+
+input CreatePlayerInput {
+  id: ID!
+  name: String!
+  lane: [String!]!
+  heros: [String!]!
+  rank: String!
+}
+
+input UpdatePlayerInput {
+  id: ID!
+  name: String!
+  lane: [String!]!
+  heros: [String!]!
+  rank: String!
+}
+
+type Mutation {
+  createItem(input: CreateItemInput!): Item
+  updateItem(input: UpdateItemInput!): Item
+  # TODO 5.1 Define the schema for the deleteItem Mutation
+  deleteItem(id: ID!): ID!
+  # TODO 5.1 End
+  createPlayer(input: CreatePlayerInput!): Player
+  updatePlayer(input: UpdatePlayerInput!): Player
+}
+
+type Subscription {
+  itemCreated: Item!
+  itemUpdated: Item!
+  # TODO 6.1 Define the schema for the deleteItem Subscription
+  itemDeleted: ID!
+  # TODO 6.1 End
+  playerCreated: Player!
+  playerUpdated: Player!
+}
