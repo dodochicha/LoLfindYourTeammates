@@ -7,7 +7,7 @@ import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 
 function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  console.log("login...")
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -45,7 +45,7 @@ function Login() {
                 </Form.Item>
                 <Form.Item
                     name="password"
-                    rules={[{ required: true, message: 'Please input your assword!' }]}
+                    rules={[{ required: true, message: 'Please input your password!' }]}
                 >
                     <Input.Password
                     prefix={<LockOutlined className="site-form-item-icon" />}

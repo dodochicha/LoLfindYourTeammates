@@ -2,9 +2,6 @@ import { useQuery } from "@apollo/client";
 
 import { GET_ITEMS_QUERY } from "../graphql/queries";
 
-import Balance from "./Balance";
-import Category from "./Category";
-
 function Search() {
   // TODO 2.2 Use the useQuery hook to get items from backend
   //   const {
