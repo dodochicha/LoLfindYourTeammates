@@ -1,0 +1,33 @@
+.HomePage {
+    box-sizing: border-box;
+    background-color: #13181B;
+    /* margin: auto 0;
+    padding: 0; */
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: #EDB852;
+}
+
+.Header-Text {
+    align-self: center;
+    margin-top: 10%;
+    margin-bottom: 0%;
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: 0.3em;
+}
+
+.Header-Text-2 {
+    font-weight: 800;
+    letter-spacing: 0.2em;
+}
+
+.ButtonsContainer {
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+}
