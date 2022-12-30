@@ -14,3 +14,15 @@ export const GET_ITEMS_QUERY = gql`
     }
   }
 `;
+
+export const GET_PLAYERS_QUERY = gql`
+  query GET_PLAYERS_QUERY {
+    players {
+      id
+      name
+      lane
+      heros
+      rank
+    }
+  }
+`;

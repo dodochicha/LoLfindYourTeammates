@@ -1,39 +1,63 @@
-import { useQuery } from "@apollo/client";
 import { useMutation } from "@apollo/client";
-import { GET_ITEMS_QUERY } from "../graphql/queries";
-import { CREATE_ITEM_MUTATION } from "../graphql/mutations";
+import {
+  CREATE_PLAYER_MUTATION,
+  UPDATE_PLAYER_MUTATION,
+} from "../graphql/mutations";
 
 import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 
 function Profile() {
-  // TODO 2.2 Use the useQuery hook to get items from backend
-  //   const {
-  //     loading,
-  //     error,
-  //     data: itemsData,
-  //     subscribeToMore,
-  //   } = useQuery(GET_ITEMS_QUERY);
-  //   if (itemsData !== undefined) {
-  //     var { items } = itemsData;
-  //   } else {
-  //     items = [];
-  //   }
-  //   console.log(items);
-  // TODO 2.2 End
-  const [createItem] = useMutation(CREATE_ITEM_MUTATION);
+  const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
+  const [updatePlayer] = useMutation(UPDATE_PLAYER_MUTATION);
   const handleSubmit = (formData) => {
-    // TODO 3.3 Apply the `createItem` callback function
-
-    createItem({
-      variables: {
-        input: {
-          id: uuidv4(),
-          ...formData,
+    if (formData.name === "" || formData.lane === [] || formData.heros === []) {
+      setErrors({
+        name: !formData.name,
+        lane: !formData.lane,
+        heros: !formData.heros,
+      });
+      return;
+    }
+    if (1) {
+      //player first write his/her profile
+      createPlayer({
+        variables: {
+          input: {
+            id: uuidv4(),
+            ...formData,
+          },
         },
-      },
-    });
-
-    // TODO 3.3 End
+      });
+    } else {
+      updatePlayer({
+        variables: {
+          input: {
+            id: uuidv4(),
+            ...formData,
+          },
+        },
+      });
+    }
+  };
+  const sanitizedDefaultFormData = {
+    name: "",
+    lane: [],
+    heros: [],
+    rank: "鐵",
+  };
+  const [formData, setFormData] = useState(sanitizedDefaultFormData);
+  const [errors, setErrors] = useState({
+    name: false,
+    lane: false,
+    heros: false,
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   return (
     <div>
