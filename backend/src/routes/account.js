@@ -1,8 +1,8 @@
 import { Router } from "express";
-import User from "../models/user";
+import User from "../models/user.js";
+import bcrypt from 'bcrypt';
 
 const router = Router();
-const bcrypt = require('bcrypt');
 
 router.post("/newUser", async (req, res) => {
     try {
@@ -41,30 +41,30 @@ router.post("/newUser", async (req, res) => {
     }
 });
 
-// router.post("/userLogin", async (req, res) => {
-//     try {
-//         if (!req.body.email) {
-//             return res.json({ message: "Please enter your email.", status: "Error" });   
-//         }
-//         else if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email)){
-//             return res.json({ message: "Invalid email address!", status: "Error" });     
-//         }
-//         else if (!req.body.password) {
-//             return res.json({ message: "Please enter your password.", status: "Error" });
-//         }
-//         else{
-//             let user = await User.findOne({ email: req.body.email }); 
-//             if( !user ){
-//                 return res.json({ message: "This email has not been registered yet!", status: "Error" });
-//             }
-//             if(await bcrypt.compare(req.body.password, user.password)){
-
-//             }
-//         }
-//     } catch (event) {
-//         res.json({ message: "Database insertion failed", status: "Error" });   
-//         throw new Error("Database insertion failed");
-//     }
-// });
+router.post("/userLogin", async (req, res) => {
+    try {
+        if (!req.body.username) {
+            return res.json({ message: "Please enter your username.", status: "Error" });   
+        }
+        else if (!req.body.password) {
+            return res.json({ message: "Please enter your password.", status: "Error" });
+        }
+        else{
+            let user = await User.findOne({ username: req.body.username }); 
+            if( !user ){
+                return res.json({ message: "This username has not been registered yet!", status: "Error" });
+            }
+            if(await bcrypt.compare(req.body.password, user.password)){
+                return res.json({ message: "Password is correct", status: "Success" });
+            }
+            else{
+                return res.json({ message: "Incorrect password!", status: "Error" });
+            }
+        }
+    } catch (event) {
+        res.json({ message: "Database insertion failed", status: "Error" });   
+        throw new Error("Database insertion failed");
+    }
+});
 
 export default router;

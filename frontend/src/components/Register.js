@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { Button, Form, Input, Space, Modal, Checkbox } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, ArrowRightOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useMatch, useResolvedPath, useNavigate } from 'react-router-dom';
-// import axios from '../../api';
+import axios from '../api';
 
 function Register() {
   // const [passwordVisible, setPasswordVisible] = useState(false);
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ password2, setPassword2 ] = useState('')
-  const [ type, setType ] = useState('Buyer')
 
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -31,10 +30,9 @@ function Register() {
     const {
       data: { message, status, account_type },
     } = await axios.post('/newUser', {
-      email,
+      username,
       password,
       password2,
-      type
     });
 
     console.log(message, status, account_type)

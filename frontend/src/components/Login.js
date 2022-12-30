@@ -1,14 +1,18 @@
 import React from 'react';
 import '../styles/Login.css';
 import { useState } from 'react';
-import { Button, Checkbox, Form, Input, Space } from 'antd';
+import { Button, Checkbox, Form, Input, Space, Modal } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, ArrowRightOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link, useMatch, useResolvedPath, useNavigate } from 'react-router-dom';
+import axios from '../api';
 
 function Login() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   console.log("login...")
+  const [ username, setUsername ] = useState('')
+  const [ password, setPassword ] = useState('')
+
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -17,6 +21,30 @@ function Login() {
     console.log('Failed:', errorInfo);
   };
   
+  const handleChange = (func) => (event) => {
+    func(event.target.value);
+  };
+
+  const handleUserLogin = async () => {
+    const {
+      data: { message, status},
+    } = await axios.post('/userLogin', {
+      username,
+      password,
+    });
+
+    console.log(message, status)
+    if(status === "Error"){
+      Modal.error({
+        title: 'This is an error message!',
+        content: message
+      });
+    }
+    else{
+      navigate("/");
+    }
+  };
+
   return (
     <div className="LoginPage">
         {/* <h1 className="Reg-Text"> Create Account </h1> */}
@@ -41,7 +69,7 @@ function Login() {
                     name="username"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" size="large"/>
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" size="large" onChange={handleChange(setUsername)}/>
                 </Form.Item>
                 <Form.Item
                     name="password"
@@ -52,6 +80,7 @@ function Login() {
                     type="password"
                     placeholder="Password"
                     size="large"
+                    onChange={handleChange(setPassword)}
                     />
                 </Form.Item>
             
@@ -83,8 +112,8 @@ function Login() {
                 //   span: 20,
                 // }}
               >
-                <Button type="primary" block htmlType="submit" size="large" style={{ background: "#5A3E1E" }}>
-                  Log in <ArrowRightOutlined />
+                <Button type="primary" block htmlType="submit" size="large" style={{ background: "#5A3E1E" }} onClick={handleUserLogin}>
+                  Log in
                 </Button>
               </Form.Item>
             </Form>

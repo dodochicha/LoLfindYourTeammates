@@ -1,21 +1,30 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\user\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add express
+  C:\Program Files\nodejs\node.exe C:\Users\Beatrice\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add express nodemon; yarn add -D @babel/cli @babel/core @babel/node @babel/preset-env
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\nodejs\;C:\Users\user\anaconda3;C:\Users\user\anaconda3\Library\mingw-w64\bin;C:\Users\user\anaconda3\Library\usr\bin;C:\Users\user\anaconda3\Library\bin;C:\Users\user\anaconda3\Scripts;C:\Users\user\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Users\user\AppData\Local\Programs\Microsoft VS Code\bin;C:\MinGW\bin;C:\Users\user\AppData\Roaming\npm
+  C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Process Lasso\;C:\Python27;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Beatrice\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Beatrice\AppData\Local\Programs\Python\Python39\;C:\Users\Beatrice\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Beatrice\AppData\Local\Programs\Python\Python310;C:\Users\Beatrice\AppData\Local\Microsoft\WindowsApps;C:\Users\Beatrice\AppData\Local\Programs\Microsoft VS Code\bin;C:\Python27;C:\Users\Beatrice\AppData\Local\Pandoc\;C:\Users\Beatrice\anaconda3;C:\Users\Beatrice\anaconda3\Scripts;C:\Users\Beatrice\anaconda3\Library\bin;C:\MinGW\bin;C:\Users\Beatrice\AppData\Roaming\npm
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  16.16.0
+  16.17.0
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:71:26)
+  Error: https://registry.yarnpkg.com/nodemon;: Not found
+      at Request.params.callback [as _callback] (C:\Users\Beatrice\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
+      at Request.self.callback (C:\Users\Beatrice\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (C:\Users\Beatrice\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (C:\Users\Beatrice\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -25,7 +34,7 @@ npm manifest:
     "description": "",
     "main": "index.js",
     "scripts": {
-      "server": "nodemon src/index.js",
+      "server": "nodemon src/index.js --ext js --exec babel-node",
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
