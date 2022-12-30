@@ -33,3 +33,27 @@ export const ITEM_DELETED_SUBSCRIPTION = gql`
   }
 `;
 // TODO 6.4 End
+
+export const PLAYER_CREATED_SUBSCRIPTION = gql`
+  subscription PlayerCreated {
+    playerCreated {
+      id
+      name
+      lane
+      heros
+      rank
+    }
+  }
+`;
+
+export const PLAYER_UPDATED_SUBSCRIPTION = gql`
+  subscription PlayerUpdated {
+    playerUpdated {
+      id
+      name
+      lane
+      heros
+      rank
+    }
+  }
+`;

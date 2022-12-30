@@ -28,3 +28,27 @@ export const DELETE_ITEM_MUTATION = gql`
     deleteItem(id: $id)
   }
 `;
+
+export const CREATE_PLAYER_MUTATION = gql`
+  mutation CreatePlayer($input: CreatePlayerInput!) {
+    createPlayer(input: $input) {
+      id
+      name
+      lane
+      heros
+      rank
+    }
+  }
+`;
+
+export const UPDATE_PLAYER_MUTATION = gql`
+  mutation UpdatePlayer($input: UpdatePlayerInput!) {
+    updatePlayer(input: $input) {
+      id
+      name
+      lane
+      heros
+      rank
+    }
+  }
+`;

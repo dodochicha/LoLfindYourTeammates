@@ -1,27 +1,62 @@
 import { useQuery } from "@apollo/client";
 
-import { GET_ITEMS_QUERY } from "../graphql/queries";
-
-import Balance from "./Balance";
-import Category from "./Category";
-
+import { GET_PLAYERS_QUERY } from "../graphql/queries";
+import {
+  PLAYER_CREATED_SUBSCRIPTION,
+  PLAYER_UPDATED_SUBSCRIPTION,
+} from "../graphql/subscriptions";
+import { useEffect } from "react";
+import React from "react";
+import { Space, Table, Tag } from "antd";
+import { columns } from "../utils/columns";
 function Search() {
-  // TODO 2.2 Use the useQuery hook to get items from backend
-  //   const {
-  //     loading,
-  //     error,
-  //     data: itemsData,
-  //     subscribeToMore,
-  //   } = useQuery(GET_ITEMS_QUERY);
-  //   if (itemsData !== undefined) {
-  //     var { items } = itemsData;
-  //   } else {
-  //     items = [];
-  //   }
-  //   console.log(items);
-  // TODO 2.2 End
+  const {
+    loading,
+    error,
+    data: playersData,
+    subscribeToMore,
+  } = useQuery(GET_PLAYERS_QUERY);
+  if (playersData !== undefined) {
+    var players = playersData.players.map((player) => ({
+      ...player,
+      key: player.id,
+    }));
+  } else {
+    players = [];
+  }
+  useEffect(() => {
+    subscribeToMore({
+      document: PLAYER_CREATED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const player = subscriptionData.data.playerCreated;
+        return {
+          players: [player, ...prev.players],
+        };
+      },
+    });
+  }, [subscribeToMore]);
 
-  return <div>Search</div>;
+  useEffect(() => {
+    subscribeToMore({
+      document: PLAYER_UPDATED_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const updatedPlayer = subscriptionData.data.playerUpdated;
+        return {
+          players: prev.players.map((player) =>
+            player.id === updatedPlayer.id ? updatedPlayer : player
+          ),
+        };
+      },
+    });
+  }, [subscribeToMore]);
+  return (
+    <>
+      <div>Search</div>
+      <Table columns={columns} dataSource={players} />
+    </>
+  );
 }
 
 export default Search;
