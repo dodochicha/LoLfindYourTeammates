@@ -1,5 +1,8 @@
 import { useQuery } from "@apollo/client";
 
+
+import { GET_ITEMS_QUERY } from "../graphql/queries";
+
 import { GET_PLAYERS_QUERY } from "../graphql/queries";
 import {
   PLAYER_CREATED_SUBSCRIPTION,
@@ -9,6 +12,7 @@ import { useEffect } from "react";
 import React from "react";
 import { Space, Table, Tag } from "antd";
 import { columns } from "../utils/columns";
+
 function Search() {
   const {
     loading,
