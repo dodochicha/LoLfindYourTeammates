@@ -16,8 +16,8 @@ export const GET_ITEMS_QUERY = gql`
 `;
 
 export const GET_PLAYERS_QUERY = gql`
-  query GET_PLAYERS_QUERY {
-    players {
+  query GET_PLAYERS_QUERY($filter: Filter!) {
+    players(filter: $filter) {
       id
       name
       lane

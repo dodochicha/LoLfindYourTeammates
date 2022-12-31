@@ -20,7 +20,7 @@ npm run server
 
 ```graphql
 query players {
-  players {
+  players(filter: { lane: [], rank: [] }) {
     id
     name
     lane
@@ -36,11 +36,11 @@ query players {
 mutation createPlayer {
   createPlayer(
     input: {
-      id: "2"
-      name: "T1 Zeus"
-      lane: ["Top"]
-      heros: ["杰西"]
-      rank: "菁英"
+      id: "6"
+      name: "Drx Deft"
+      lane: ["Ad"]
+      heros: ["凱特琳"]
+      rank: "宗師"
     }
   ) {
     id
@@ -86,12 +86,28 @@ subscription playerUpdated {
 }
 ```
 
+```graphql
+subscription PlayerCreated {
+  playerCreated {
+    id
+    name
+    lane
+    heros
+    rank
+  }
+}
+```
+
 ## Route
 
-/login
+- /login
 
-/register
+- /register
 
-/search
+- /search
 
-/profile
+- /profile
+
+## Mark
+
+- dataInit() : 測試用的起始資料，可註解掉或修改，在 backend/src/index

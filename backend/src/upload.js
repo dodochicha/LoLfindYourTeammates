@@ -52,6 +52,34 @@ const example2 = [
     heros: ["雷茲"],
     rank: "菁英",
   },
+  {
+    id: "2",
+    name: "T1 Oner",
+    lane: ["Jungle"],
+    heros: ["維爾戈"],
+    rank: "菁英",
+  },
+  {
+    id: "3",
+    name: "T1 Zeus",
+    lane: ["Top"],
+    heros: ["厄薩斯"],
+    rank: "菁英",
+  },
+  {
+    id: "4",
+    name: "T1 Gumayusi",
+    lane: ["Ad"],
+    heros: ["希維爾", "凱特琳", "法洛士"],
+    rank: "菁英",
+  },
+  {
+    id: "5",
+    name: "T1 Keria",
+    lane: ["Sup"],
+    heros: ["拉克斯", "卡瑪"],
+    rank: "菁英",
+  },
 ];
 
 const dataInit = async () => {

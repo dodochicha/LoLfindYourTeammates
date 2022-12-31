@@ -30,9 +30,14 @@ type Player {
   rank: String!
 }
 
+input Filter {
+  lane: [String]
+  rank: [String]
+}
+
 type Query {
   items: [Item!]!
-  players: [Player!]!
+  players(filter: Filter!): [Player!]!
 }
 
 input CreateItemInput {
