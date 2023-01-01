@@ -5,11 +5,13 @@ import {
   PLAYER_UPDATED_SUBSCRIPTION,
 } from "../graphql/subscriptions";
 import { useEffect, useState } from "react";
+import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import React from "react";
 import { Space, Table, Tag, Layout, theme, Button, Typography } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
+
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 function Search() {
@@ -33,6 +35,7 @@ function Search() {
   } = useQuery(GET_PLAYERS_QUERY, {
     variables: { filter: filter },
   });
+  const navigate = useNavigate();
   if (playersData !== undefined) {
     var players = playersData.players.map((player) => ({
       ...player,
@@ -41,10 +44,36 @@ function Search() {
   } else {
     players = [];
   }
+  const handleToProfile = () => {
+    navigate("/profile");
+  };
+  const ShowTime = () => {
+    var NowDate = new Date();
+    var h = ("00" + NowDate.getHours()).slice(-2);
+    var m = ("00" + NowDate.getMinutes()).slice(-2);
+    var s = ("00" + NowDate.getSeconds()).slice(-2);
+    return `${h}:${m}:${s}`;
+  };
 
   return (
     <>
-      <Header>Search</Header>
+      <Header>
+        <Layout>
+          <Content></Content>
+          <Sider>
+            <Button
+              type="primary"
+              block
+              htmlType="submit"
+              size="large"
+              style={{ background: "#5A3E1E" }}
+              onClick={handleToProfile}
+            >
+              Profile
+            </Button>
+          </Sider>
+        </Layout>
+      </Header>
       <Layout
         style={{
           minHeight: "100vh",
@@ -93,12 +122,11 @@ function Search() {
             >
               <div
                 style={{
-                  background: "rgba(255, 255, 255, 0.2)",
                   fontSize: "18px",
                   height: "32px",
                 }}
               >
-                refresh
+                Last updated:{ShowTime()}
               </div>
             </Content>
           </Layout>

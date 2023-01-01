@@ -48,7 +48,7 @@ const example2 = [
   {
     id: "1",
     name: "T1 Faker",
-    lane: ["Mid"],
+    lane: ["Middle"],
     heros: ["雷茲"],
     rank: "菁英",
   },
@@ -69,14 +69,14 @@ const example2 = [
   {
     id: "4",
     name: "T1 Gumayusi",
-    lane: ["Ad"],
+    lane: ["Button"],
     heros: ["希維爾", "凱特琳", "法洛士"],
     rank: "菁英",
   },
   {
     id: "5",
     name: "T1 Keria",
-    lane: ["Sup"],
+    lane: ["Support"],
     heros: ["拉克斯", "卡瑪"],
     rank: "菁英",
   },

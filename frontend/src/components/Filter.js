@@ -6,9 +6,9 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
   const LaneTag = [
     { value: "Top" },
     { value: "Jungle" },
-    { value: "Mid" },
-    { value: "Ad" },
-    { value: "Sup" },
+    { value: "Middle" },
+    { value: "Button" },
+    { value: "Support" },
   ];
   const RankTag = [
     { value: "鐵" },
