@@ -6,7 +6,7 @@ import {
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
-import { Form, Input, Select, Button, Layout } from "antd";
+import { Form, Input, Select, Button, Layout, message } from "antd";
 import heros_eng from "../utils/heros_eng";
 import heros from "../utils/heros";
 
@@ -20,6 +20,24 @@ function Profile() {
   const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
   const [updatePlayer] = useMutation(UPDATE_PLAYER_MUTATION);
 
+  const displayStatus = (s) => {
+    if (s.msg) {
+      const { type, msg } = s;
+      const content = {
+        content: msg,
+        duration: 0.5,
+      };
+      switch (type) {
+        case "success":
+          message.success(content);
+          break;
+        case "error":
+        default:
+          message.error(content);
+          break;
+      }
+    }
+  };
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -61,16 +79,12 @@ function Profile() {
   const [form] = Form.useForm();
   const { Option } = Select;
   const onFinish = (values) => {
-    console.log(
-      "Success:",
-      values.PlayerID,
-      values.Select_lanes,
-      values.Select_champs,
-      values.Select_rank
-    );
-
     if (true) {
       //user.player === undefined
+      displayStatus({
+        type: "success",
+        msg: "Created successfully",
+      });
       var playerId = uuidv4();
       createPlayer({
         variables: {
@@ -102,6 +116,7 @@ function Profile() {
   };
   const handleToSearch = () => {
     navigate("/search");
+    window.location.reload();
   };
 
   return (

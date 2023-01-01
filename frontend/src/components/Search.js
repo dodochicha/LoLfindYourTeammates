@@ -1,13 +1,9 @@
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_PLAYERS_QUERY } from "../graphql/queries";
-import {
-  PLAYER_CREATED_SUBSCRIPTION,
-  PLAYER_UPDATED_SUBSCRIPTION,
-} from "../graphql/subscriptions";
 import { useEffect, useState } from "react";
-import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React from "react";
-import { Space, Table, Tag, Layout, theme, Button, Typography } from "antd";
+import { Table, Layout, Button, Typography, Input } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
@@ -17,16 +13,21 @@ const { Header, Content, Sider, Footer } = Layout;
 function Search() {
   const [laneFilter, setLaneFilter] = useState([]);
   const [rankFilter, setRankFilter] = useState([]);
-  const [filter, setFilter] = useState({ lane: [], rank: [] });
-  const [a, setA] = useState(0);
+  const [filter, setFilter] = useState({ name: "", lane: [], rank: [] });
+  const [nameFilter, setNameFilter] = useState("");
+  const { Search } = Input;
   useEffect(() => {
-    var newFilter = { lane: laneFilter, rank: filter.rank };
+    var newFilter = { ...filter, lane: laneFilter };
     setFilter(newFilter);
   }, [laneFilter]);
   useEffect(() => {
-    var newFilter = { lane: filter.lane, rank: rankFilter };
+    var newFilter = { ...filter, rank: rankFilter };
     setFilter(newFilter);
   }, [rankFilter]);
+  useEffect(() => {
+    var newFilter = { ...filter, name: nameFilter };
+    setFilter(newFilter);
+  }, [nameFilter]);
   const {
     loading,
     error,
@@ -54,12 +55,28 @@ function Search() {
     var s = ("00" + NowDate.getSeconds()).slice(-2);
     return `${h}:${m}:${s}`;
   };
+  const onSearch = (value) => setNameFilter(value);
 
   return (
     <>
       <Header>
         <Layout>
-          <Content></Content>
+          <Sider
+            width={420}
+            style={{
+              background: "rgba(255, 255, 255, 0.2)",
+            }}
+          ></Sider>
+          <Content>
+            <Search
+              size="large"
+              placeholder="find player..."
+              onSearch={onSearch}
+              style={{
+                width: 400,
+              }}
+            />
+          </Content>
           <Sider>
             <Button
               type="primary"
