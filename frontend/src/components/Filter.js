@@ -1,7 +1,8 @@
 import React from "react";
-import { Select, Tag, Typography } from "antd";
+import { Layout, Tag, Form, Select, Typography } from "antd";
 import { useEffect, useState } from "react";
 const { Title } = Typography;
+const { Header, Content, Sider, Footer } = Layout;
 const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
   const LaneTag = [
     { value: "Top" },
@@ -21,6 +22,7 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
     { value: "宗師" },
     { value: "菁英" },
   ];
+  const [form] = Form.useForm();
   const tagRender = (props) => {
     const { label, value, closable, onClose } = props;
     const onPreventMouseDown = (event) => {
@@ -43,37 +45,80 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
   };
 
   return (
-    <>
-      <Title level={3}>Custom conditions</Title>
-      <Title level={4}>Lane:</Title>
-      <Select
-        mode="multiple"
-        showArrow
-        tagRender={tagRender}
-        defaultValue={[]}
+    <Layout>
+      <Header
         style={{
-          width: "100%",
+          background: "rgba(255, 255, 255, 0)",
         }}
-        options={LaneTag}
-        onChange={(e) => {
-          setLaneFilter(e);
-        }}
-      />
-      <Title level={4}>Rank:</Title>
-      <Select
-        mode="multiple"
-        showArrow
-        tagRender={tagRender}
-        defaultValue={[]}
-        style={{
-          width: "100%",
-        }}
-        options={RankTag}
-        onChange={(e) => {
-          setRankFilter(e);
-        }}
-      />
-    </>
+      >
+        <Title
+          level={3}
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Custom conditions
+        </Title>
+      </Header>
+      <Layout>
+        <Sider
+          width={"10%"}
+          style={{
+            background: "rgba(255, 255, 255, 0)",
+          }}
+        ></Sider>
+        <Content>
+          <Form
+            labelCol={{
+              span: 4,
+            }}
+            wrapperCol={{
+              span: 24,
+            }}
+            layout="vertical"
+            form={form}
+            size="large"
+          >
+            <Form.Item
+              label={<label style={{ fontSize: "20px" }}>Lane:</label>}
+              name="lane"
+            >
+              <Select
+                mode="multiple"
+                showArrow
+                tagRender={tagRender}
+                defaultValue={[]}
+                style={{
+                  width: "100%",
+                }}
+                options={LaneTag}
+                onChange={(e) => {
+                  setLaneFilter(e);
+                }}
+              />
+            </Form.Item>
+            <Form.Item
+              label={<label style={{ fontSize: "20px" }}>Rank:</label>}
+              name="date"
+            >
+              <Select
+                mode="multiple"
+                showArrow
+                tagRender={tagRender}
+                defaultValue={[]}
+                style={{
+                  width: "100%",
+                }}
+                options={RankTag}
+                onChange={(e) => {
+                  setRankFilter(e);
+                }}
+              />
+            </Form.Item>
+          </Form>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 export default Filter;

@@ -7,6 +7,7 @@ import { Table, Layout, Button, Typography, Input } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
+import InviteModal from "./InviteModal";
 
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
@@ -15,6 +16,8 @@ function Search() {
   const [rankFilter, setRankFilter] = useState([]);
   const [filter, setFilter] = useState({ name: "", lane: [], rank: [] });
   const [nameFilter, setNameFilter] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [playerInvited, setPlayerInvited] = useState("");
   const { Search } = Input;
   useEffect(() => {
     var newFilter = { ...filter, lane: laneFilter };
@@ -48,6 +51,10 @@ function Search() {
   const handleToProfile = () => {
     navigate("/profile");
   };
+  const handleInvite = (e) => {
+    setModalOpen(true);
+    setPlayerInvited(e.target.innerText.slice(7));
+  };
   const ShowTime = () => {
     var NowDate = new Date();
     var h = ("00" + NowDate.getHours()).slice(-2);
@@ -58,39 +65,63 @@ function Search() {
   const onSearch = (value) => setNameFilter(value);
 
   return (
-    <>
-      <Header>
+    <Layout>
+      <Header
+        style={{
+          height: "80px",
+          background: "rgba(255, 255, 255, 0)",
+        }}
+      >
         <Layout>
-          <Sider
-            width={420}
+          <Header
             style={{
-              background: "rgba(255, 255, 255, 0.2)",
+              height: "30px",
+              background: "rgba(255, 255, 255, 0)",
             }}
-          ></Sider>
-          <Content>
-            <Search
-              size="large"
-              placeholder="find player..."
-              onSearch={onSearch}
+          ></Header>
+          <Layout>
+            <Sider
+              width={"23.5%"}
               style={{
-                width: 400,
+                background: "rgba(255, 255, 255, 0)",
               }}
-            />
-          </Content>
-          <Sider>
-            <Button
-              type="primary"
-              block
-              htmlType="submit"
-              size="large"
-              style={{ background: "#5A3E1E" }}
-              onClick={handleToProfile}
+            ></Sider>
+            <Content>
+              <Search
+                size="large"
+                placeholder="find player..."
+                onSearch={onSearch}
+                style={{
+                  width: 400,
+                }}
+              />
+            </Content>
+            <Sider
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+              }}
             >
-              Profile
-            </Button>
-          </Sider>
+              <Button
+                type="primary"
+                block
+                htmlType="submit"
+                size="large"
+                style={{ background: "#5A3E1E" }}
+                onClick={handleToProfile}
+              >
+                Profile
+              </Button>
+            </Sider>
+          </Layout>
         </Layout>
       </Header>
+      <InviteModal
+        open={modalOpen}
+        player={playerInvited}
+        onCancel={() => {
+          setModalOpen(false);
+        }}
+      />
       <Layout
         style={{
           minHeight: "100vh",
@@ -99,7 +130,7 @@ function Search() {
         <Sider
           width={400}
           style={{
-            background: "rgba(255, 255, 255, 0.2)",
+            background: "rgba(255, 255, 255, 0)",
           }}
         >
           <Filter
@@ -114,7 +145,7 @@ function Search() {
             padding: 24,
             margin: 0,
             minHeight: 280,
-            background: "rgba(255, 255, 255, 0.2)",
+            background: "rgba(255, 255, 255, 0)",
             height: "100%",
           }}
         >
@@ -122,7 +153,7 @@ function Search() {
             <Sider
               width={45}
               style={{
-                background: "rgba(255, 255, 255, 0.2)",
+                background: "rgba(255, 255, 255, 0)",
                 height: "32px",
               }}
             >
@@ -133,7 +164,7 @@ function Search() {
             </Sider>
             <Content
               style={{
-                background: "rgba(255, 255, 255, 0.2)",
+                background: "rgba(255, 255, 255, 0)",
                 height: "32px",
               }}
             >
@@ -147,10 +178,14 @@ function Search() {
               </div>
             </Content>
           </Layout>
-          <Table columns={columns} dataSource={players} className="table" />
+          <Table
+            columns={columns(handleInvite)}
+            dataSource={players}
+            className="table"
+          />
         </Content>
       </Layout>
-    </>
+    </Layout>
   );
 }
 
