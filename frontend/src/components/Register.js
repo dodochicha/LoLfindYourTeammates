@@ -59,9 +59,6 @@ function Register() {
               // wrapperCol={{
               //   span: 16,
               // }}
-              initialValues={{
-                remember: true,
-              }}
               layout="vertical"
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
