@@ -9,6 +9,7 @@ import Profile from "./components/Profile";
 import Search from "./components/Search";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Player from "./components/Player";
 
 function App() {
   return (
@@ -19,9 +20,10 @@ function App() {
           <Route path = "/" element={<Home />} />
           <Route path = "/register" element={<Register />} />
           <Route path = "/login" element={<Login />} />
-          <Route path="search" element={<Search />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="*" element={<h1>Error, Page Not Found</h1>} />
+          <Route path = "search" element={<Search />} />
+          <Route path = "profile" element={<Profile />} />
+          <Route path = "player" element={<Player />} />
+          <Route path = "*" element={<h1>Error, Page Not Found</h1>} />
         </Routes>
         {/* <Routes>
           <Route path="/" element={<Home />}>
