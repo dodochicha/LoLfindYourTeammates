@@ -93,6 +93,7 @@ function Search() {
                 onSearch={onSearch}
                 style={{
                   width: 400,
+                  background: "rgba(255, 255, 255, 0)",
                 }}
               />
             </Content>
@@ -121,6 +122,7 @@ function Search() {
         onCancel={() => {
           setModalOpen(false);
         }}
+        setOpen={setModalOpen}
       />
       <Layout
         style={{

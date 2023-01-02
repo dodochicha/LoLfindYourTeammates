@@ -31,7 +31,7 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
     };
     return (
       <Tag
-        color="#5b8c00"
+        color="green"
         onMouseDown={onPreventMouseDown}
         closable={closable}
         onClose={onClose}
