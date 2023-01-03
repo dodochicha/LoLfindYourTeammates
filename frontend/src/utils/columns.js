@@ -1,6 +1,6 @@
 import { Space, Table, Tag } from "antd";
 
-const columns = ({ handelInvite, myPlayerName }) => [
+const columns = (handelInvite, myPlayerName) => [
   {
     title: "Name",
     dataIndex: "name",

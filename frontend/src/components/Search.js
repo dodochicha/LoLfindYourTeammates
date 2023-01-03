@@ -236,7 +236,7 @@ function Search() {
             </Content>
           </Layout>
           <Table
-            columns={columns({ handleInvite, myPlayerName })}
+            columns={columns(handleInvite, myPlayerName)}
             dataSource={players}
             className="table"
           />
