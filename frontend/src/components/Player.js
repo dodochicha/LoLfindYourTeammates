@@ -19,7 +19,7 @@ function Player() {
             {/*TODO: change to user's profile hero type*/}
             <img
               className="Player-Profile-Type"
-              src={require("../images/mid.PNG")}
+              src={require("../images/mid.png")}
             ></img>
           </div>
           {/*TODO: change to user's bio*/}

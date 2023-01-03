@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/Filter.css"
 import { Layout, Tag, Form, Select, Typography } from "antd";
 import { useEffect, useState } from "react";
 const { Title } = Typography;
@@ -45,29 +46,31 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
   };
 
   return (
-    <Layout>
-      <Header
+    <div>
+      {/* <Header
         style={{
           background: "rgba(255, 255, 255, 0)",
         }}
-      >
+      > */}
         <Title
           level={3}
           style={{
             textAlign: "center",
+            color: "rgba(16, 17, 20, 1)",
+            margin: 0
           }}
         >
           Custom conditions
         </Title>
-      </Header>
-      <Layout>
-        <Sider
+      {/* </Header> */}
+      {/* <Layout> */}
+        {/* <Sider
           width={"10%"}
           style={{
             background: "rgba(255, 255, 255, 0)",
           }}
-        ></Sider>
-        <Content>
+        ></Sider> */}
+        {/* <Content> */}
           <Form
             labelCol={{
               span: 4,
@@ -80,25 +83,24 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
             size="large"
           >
             <Form.Item
-              label={<label style={{ fontSize: "20px" }}>Lane:</label>}
+              label={<label style={{ fontSize: "20px", color: "rgba(16, 17, 20, 1)"}}>Lane:</label>}
               name="lane"
             >
               <Select
+                // className="Filter-Select"
                 mode="multiple"
                 showArrow
                 tagRender={tagRender}
                 defaultValue={[]}
-                style={{
-                  width: "100%",
-                }}
                 options={LaneTag}
                 onChange={(e) => {
                   setLaneFilter(e);
                 }}
+                dropdownStyle={{ backgroundColor: "rgb(43, 45, 53)", color: "white" }}
               />
             </Form.Item>
             <Form.Item
-              label={<label style={{ fontSize: "20px" }}>Rank:</label>}
+              label={<label style={{ fontSize: "20px", color: "rgba(16, 17, 20, 1)" }}>Rank:</label>}
               name="date"
             >
               <Select
@@ -116,9 +118,9 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
               />
             </Form.Item>
           </Form>
-        </Content>
-      </Layout>
-    </Layout>
+        {/* </Content> */}
+      {/* </Layout> */}
+    </div>
   );
 };
 export default Filter;

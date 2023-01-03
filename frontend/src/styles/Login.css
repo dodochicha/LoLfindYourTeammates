@@ -10,8 +10,9 @@ html, body {
     margin: 0;
     padding: 0;
 
-    display: grid;
-    grid-template-rows: 0fr 1fr 0fr;
+    display: flex;
+    flex-direction: row;
+
     justify-content: center;
     align-items: center;
 
@@ -23,13 +24,15 @@ html, body {
 .Form-Container {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 30%;
     overflow: hidden;
 }
 
 .Form-Background {
     margin: 0;
-    padding: 12% 19% 8% 19%;
+    padding: 0;
+    width: 100%;
+    padding: 12% 21% 8% 21%;
     
     background: rgba(16, 17, 20, 0.97);
     border-radius: 20px;
@@ -81,6 +84,11 @@ html, body {
     padding-top: 5%;
     margin-bottom: 10%;
     width: 100%;
+    background: #101114;
+}
+
+.Footer-Form {
+    background-color: #101114;
 }
 
 .Form-Footer-Name {
@@ -90,6 +98,7 @@ html, body {
     font-size: small;
 
     color: #FFFFFF;
+    /* background-color: #101114; */
 }
 
 .Form-Footer-Name-2 {
@@ -100,6 +109,7 @@ html, body {
     font-size: small;
 
     color: #8B00FF;
+    /* background-color: #101114; */
 }
 
 
@@ -169,4 +179,5 @@ html, body {
 .ant-input {
     background-color: #2B2D35;
     color: #FFFFFF;
+    /* border-radius: 20px; */
 }

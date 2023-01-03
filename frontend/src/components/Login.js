@@ -76,7 +76,7 @@ function Login() {
   return (
     <div className="Image-Background">
       {/* <h1 className="Reg-Text"> Create Account </h1> */}
-      <div className="header"></div>
+      {/* <div className="header"></div> */}
       <div className="Form-Container">
         <div className="Form-Background">
           <h1 className="Form-Header"> Log in </h1>
@@ -133,7 +133,7 @@ function Login() {
             <Form.Item className="Footer-Form-Frame">
               {/* <Space direction="horizontal" size={100}> */}
               <Form.Item
-                // style={{ display: "inline" padding-bottom: 2%;}}
+                className="Footer-Form"
                 name="remember"
                 valuePropName="checked"
                 // nostyle="true"
@@ -174,7 +174,7 @@ function Login() {
           </Form>
         </div>
       </div>
-      <div className="Footer"></div>
+      {/* <div className="Footer"></div> */}
     </div>
   );
 }

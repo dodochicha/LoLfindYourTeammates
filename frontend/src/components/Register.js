@@ -73,7 +73,7 @@ function Register() {
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
                     <Input 
-                      className= "Form-Box"
+                      className= "Reg-Form-Box"
                       // prefix={<UserOutlined className="Reg-site-form-item-icon" />} 
                       // placeholder="Username" 
                       // size="large" 
