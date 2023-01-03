@@ -12,11 +12,15 @@ import '../styles/Profile.css';
 import axios from '../api';
 
 function Profile() {
+  const { state } = useLocation();
+  const [username, setUsername] = useState(state.username)
+  const [id, setID] = useState("")
   const [name , setName] = useState("")
-  const [lane , setLane] = useState([])
+  const [lanes , setLanes] = useState([])
   const [heros , setHeros] = useState([])
   const [rank , setRank] = useState("")
-  const { state } = useLocation();
+  const [formExist , setFormExist] = useState(false)
+
   const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
   const [updatePlayer] = useMutation(UPDATE_PLAYER_MUTATION);
 
@@ -25,65 +29,53 @@ function Profile() {
 
   const handleChange = (func) => (event) => {
     func(event.target.value);
-    formData.name = event.target.value;
   };
 
   const onLaneChange = (value) => {
-    setLane(value);
-    formData.lane = value;
+    setLanes(value);
   };
 
   const onHerosChange = (value) => {
     setHeros(value);
-    formData.heros = value;
   };
 
   const onRankChange = (value) => {
     setRank(value);
-    formData.rank = value;
-  };
-
-  console.log(state.username)
-  useEffect(() => {
-    
-  }, []);
-
-  
-
-  const sanitizedDefaultFormData = {
-    name: "",
-    lane: [],
-    heros: [],
-    rank: "鐵",
   };
 
   const handleQuery = async () => {
     const {
-      data: { message, status, account_type },
+      data: { message, status, id, name, lanes, heros, rank },
     } = await axios.get('/getProfile', {
       params: {
- 
+        username
       },
     });
 
-    console.log(message, status, account_type)
-    if(status === "Error"){
-      Modal.error({
-        title: 'This is an error message!',
-        content: message
-      });
+    console.log(message, status, id, name, lanes, heros, rank)
+    if(status === "Filled"){
+      setFormExist(true);
+      setID(id);
+      setName(name);
+      setLanes(lanes);
+      setHeros(heros);
+      setRank(rank);
     }
-    else{
-      navigate("/login");
-    }
-  };
-  const tailLayout = {
-    wrapperCol: {
-      offset: 8,
-      span: 16,
-    },
+    // if(status === "Error"){
+    //   Modal.error({
+    //     title: 'This is an error message!',
+    //     content: message
+    //   });
+    // }
+    // else{
+    //   navigate("/");
+    // }
   };
 
+  useEffect(() => {
+    console.log("use effect........")
+    handleQuery();
+  }, []);
 
   const [form] = Form.useForm();
   const { Option } = Select;
@@ -96,8 +88,7 @@ function Profile() {
       values.SelectRank
     );
     
-    if (true) {
-      //user.player === undefined
+    if (!formExist) {
       var playerId = uuidv4();
       createPlayer({
         variables: {
@@ -114,18 +105,23 @@ function Profile() {
       // updatePlayer({
       //   variables: {
       //     input: {
-      //       id: user.player.id,
+      //       id: id,
       //       name: values.PlayerID,
-      //       lane: values.Select_lanes,
-      //       heros: values.Select_champs,
-      //       rank: values.Select_rank,
+      //       lane: values.SelectLanes,
+      //       heros: values.SelectChamps,
+      //       rank: values.SelectRank,
       //     },
       //   },
       // });
     }
+    navigate("/");
   };
   const onReset = () => {
     form.resetFields();
+    setName("");
+    setLanes([]);
+    setHeros([]);
+    setRank("");
   };
 
   const handleToSearch = () => {
@@ -138,7 +134,7 @@ function Profile() {
           <div className="Prof-Form">
             <Space direction="horizontal" size={230} style={{ paddingBottom: "5%" }}>
               <Header className="Prof-Text" > {" "}
-                  {localStorage.getItem("save-me")}'s Profile{" "} 
+                  {username}'s Profile{" "} 
               </Header>
               <Sider style={{ background: "#5A3E1E" }}>
                 <Button
@@ -171,7 +167,7 @@ function Profile() {
                 ]}
                 tooltip="Your in-game name."
               >
-                <Input onChange={handleChange(setName)}/>
+                <Input onChange={handleChange(setName)} defaultValue={name}/>
               </Form.Item>
               <Form.Item
                 name="SelectLanes"
@@ -179,7 +175,7 @@ function Profile() {
                 rules={[{ required: true, message: 'Please select your main roles!', type: 'array' }]}
                 tooltip="You can choose more than 1."
               >
-                <Select mode="multiple" onChange={ onLaneChange } placeholder="Please select your main roles!">
+                <Select mode="multiple" onChange={ onLaneChange } placeholder="Please select your main roles!" defaultValue={lanes}>
                   <Option value="top">Top</Option>
                   <Option value="jungle">Jungle</Option>
                   <Option value="mid">Middle</Option>
@@ -193,7 +189,7 @@ function Profile() {
                 rules={[{ required: true, message: 'Please select your main champions!', type: 'array' }]}
                 tooltip="You can choose more than 1."
               >
-                <Select mode="multiple" onChange={ onHerosChange } placeholder="Please select your main champions!">
+                <Select mode="multiple" onChange={ onHerosChange } placeholder="Please select your main champions!" defaultValue={heros}>
                   {heroes.map((hero) =>
                     <Option value={hero}>{hero}</Option>
                   )}
@@ -205,7 +201,7 @@ function Profile() {
                 rules={[{ required: true, message: 'Please select your rank!' }]}
                 tooltip="Your rank."
               >
-                <Select placeholder="Please select your rank" onChange={ onRankChange } >
+                <Select placeholder="Please select your rank" onChange={ onRankChange } defaultValue={rank}>
                   <Option value="iron">Iron 鐵</Option>
                   <Option value="bronze">Bronze 銅</Option>
                   <Option value="silver">Silver 銀</Option>
@@ -259,6 +255,13 @@ const tailFormItemLayout = {
       span: 16,
       offset: 8,
     },
+  },
+};
+
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
   },
 };
 
