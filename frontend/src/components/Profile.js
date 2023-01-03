@@ -14,14 +14,14 @@ import axios from "../api";
 import { useHook } from "../hooks/useHook";
 
 function Profile() {
-  const { username } = useParams();
+  const username = localStorage.getItem("username");
   const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [lanes, setLanes] = useState([]);
   const [heros, setHeros] = useState([]);
   const [rank, setRank] = useState("");
   const [formExist, setFormExist] = useState(false);
-
+  const { displayStatus } = useHook();
   const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
   const [updatePlayer] = useMutation(UPDATE_PLAYER_MUTATION);
 
@@ -120,6 +120,10 @@ function Profile() {
         },
       });
       handleProfile(playerId);
+      displayStatus({
+        type: "success",
+        msg: "Created successfully.",
+      });
     } else {
       updatePlayer({
         variables: {
@@ -133,8 +137,13 @@ function Profile() {
         },
       });
       handleProfile(id);
+      displayStatus({
+        type: "success",
+        msg: "Updated successfully.",
+      });
     }
-    navigate(`/search/${username}`);
+    // navigate(`/search`);
+    // window.location.reload();
   };
   const onReset = () => {
     form.resetFields();
@@ -145,7 +154,8 @@ function Profile() {
   };
 
   const handleToSearch = () => {
-    navigate(`/search/${username}`);
+    navigate(`/search`);
+    window.location.reload();
   };
 
   return (

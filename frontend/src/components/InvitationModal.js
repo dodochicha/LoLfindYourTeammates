@@ -15,8 +15,14 @@ function InvitationModal({
       title={`Your notification`}
       okText="Close"
       cancelText="Cancel"
-      onOk={() => setOpen(false)}
-      onCancel={() => setOpen(false)}
+      onOk={() => {
+        setOpen(false);
+        window.location.reload();
+      }}
+      onCancel={() => {
+        setOpen(false);
+        window.location.reload();
+      }}
     >
       <InvitationList
         myPlayerName={myPlayerName}

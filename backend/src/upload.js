@@ -38,7 +38,7 @@ const example2 = [
   {
     id: "4",
     name: "T1 Gumayusi",
-    lanes: ["Button"],
+    lanes: ["Bottom"],
     heros: ["希維爾", "凱特琳", "法洛士"],
     rank: "菁英",
   },

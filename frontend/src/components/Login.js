@@ -13,7 +13,7 @@ import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import axios from "../api";
 import { useHook } from "../hooks/useHook";
 
-function Login() {
+function Login({ onLogin }) {
   const LOCALSTORAGE_KEY_USERNAME = "saved-username";
   const LOCALSTORAGE_KEY_PASSWORD = "saved-password";
 
@@ -31,6 +31,7 @@ function Login() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
+    localStorage.setItem("username", username);
     console.log("Success:", values.username);
     if (rememberMe) {
       localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, username);
@@ -69,7 +70,8 @@ function Login() {
         content: message,
       });
     } else {
-      navigate(`/search/${username}`);
+      navigate(`/search`);
+      window.location.reload();
     }
   };
 

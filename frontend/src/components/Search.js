@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_PLAYERS_QUERY } from "../graphql/queries";
+import { GET_PLAYERS_QUERY, GET_INVITATIONS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import React from "react";
@@ -17,7 +17,7 @@ const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 
 function Search() {
-  const { username } = useParams();
+  const username = localStorage.getItem("username");
   const [laneFilter, setLaneFilter] = useState([]);
   const [rankFilter, setRankFilter] = useState([]);
   const [filter, setFilter] = useState({ name: "", lanes: [], rank: [] });
@@ -28,6 +28,15 @@ function Search() {
   const [invitationReadNum, setInvitationReadNum] = useState(0);
   const [myPlayerName, setMyPlayerName] = useState("");
   const { Search } = Input;
+  const {
+    loading,
+    error,
+    data: playersData,
+    subscribeToMore,
+  } = useQuery(GET_PLAYERS_QUERY, {
+    variables: { filter: filter },
+  });
+  const { data: invitationsData } = useQuery(GET_INVITATIONS_QUERY);
   const findPlayerName = async () => {
     const {
       data: { message, status, id, name, lanes, heros, rank },
@@ -39,12 +48,35 @@ function Search() {
     if (name !== undefined) setMyPlayerName(name);
   };
   useEffect(() => {
-    console.log("username:", username);
+    // console.log("username:", username);
     findPlayerName();
   }, []);
   useEffect(() => {
-    console.log(myPlayerName);
+    // console.log("invitationsData:", invitationsData);
+    if (invitationsData !== undefined) {
+      // console.log("invitationsData:", invitationsData);
+      var invitations = invitationsData.invitations.map((invitation) => ({
+        ...invitation,
+        key: invitation._id,
+      }));
+    } else {
+      var invitations = [];
+    }
+    // console.log("myPlayerName:", myPlayerName);
+    if (myPlayerName !== undefined) {
+      const result = invitations.filter(
+        (invitation) => invitation.to === myPlayerName
+      );
+      const checkedReadNum = (invitations) => {
+        const read = invitations.filter((invitation) => !invitation.read);
+        return read.length;
+      };
+      setInvitationReadNum(checkedReadNum(result));
+    }
   }, [myPlayerName]);
+  useEffect(() => {
+    // console.log("invitationReadNum:", invitationReadNum);
+  }, [invitationReadNum]);
   useEffect(() => {
     var newFilter = { ...filter, lanes: laneFilter };
     setFilter(newFilter);
@@ -57,17 +89,7 @@ function Search() {
     var newFilter = { ...filter, name: nameFilter };
     setFilter(newFilter);
   }, [nameFilter]);
-  // useEffect(() => console.log(filter), [filter]);
-  const {
-    loading,
-    error,
-    data: playersData,
-    subscribeToMore,
-  } = useQuery(GET_PLAYERS_QUERY, {
-    variables: { filter: filter },
-  });
   const navigate = useNavigate();
-  // useEffect(() => console.log(players), [players]);
   if (playersData !== undefined) {
     var players = playersData.players.map((player) => ({
       ...player,
@@ -76,12 +98,12 @@ function Search() {
   } else {
     players = [];
   }
+
   const handleToProfile = () => {
-    navigate(`/profile/${username}`, {
-      state: {
-        username,
-      },
-    });
+    navigate(`/profile`);
+  };
+  const handleToLogOut = () => {
+    navigate(`/`);
   };
   const handleInvite = (e) => {
     setModalOpen(true);
@@ -145,6 +167,22 @@ function Search() {
                 />
               </Badge>
             </Content>
+            <Sider
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+              }}
+            >
+              <Button
+                type="primary"
+                block
+                htmlType="submit"
+                size="large"
+                style={{ background: "#5A3E1E" }}
+                onClick={handleToLogOut}
+              >
+                Log out
+              </Button>
+            </Sider>
             <Sider
               style={{
                 background: "rgba(255, 255, 255, 0)",

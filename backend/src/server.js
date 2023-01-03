@@ -8,10 +8,7 @@ import { useServer } from "graphql-ws/lib/use/ws";
 import Query from "./resolvers/Query.js";
 import Mutation from "./resolvers/Mutation.js";
 import Subscription from "./resolvers/Subscription.js";
-import DateResolver from "./resolvers/Date.js";
-import CategoryResolver from "./resolvers/Category.js";
 // db
-import itemModel from "./models/item.js";
 import playerModel from "./models/player.js";
 import invitationModel from "./models/invitation.js";
 const pubSub = createPubSub();
@@ -23,13 +20,10 @@ const yoga = createYoga({
       Query,
       Mutation,
       Subscription,
-      Date: DateResolver,
-      Category: CategoryResolver,
     },
   }),
   context: {
     pubSub,
-    itemModel,
     playerModel,
     invitationModel,
   },

@@ -41,9 +41,9 @@ function ReplyList({ myPlayerName }) {
           <Typography.Text mark>
             {invitation.ok ? "[Accept]" : "[Decline]"}
           </Typography.Text>
-          {`${invitation.to} ${
-            invitation.ok ? "accept" : "decline"
-          } your game request at ${invitation.date} ${invitation.time}.`}
+          {`${invitation.to} ${invitation.ok ? "accepted" : "declined"} your ${
+            invitation.date
+          } ${invitation.time} game request.`}
         </List.Item>
       )}
     />

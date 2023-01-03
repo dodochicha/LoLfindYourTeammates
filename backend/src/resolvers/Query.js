@@ -1,8 +1,4 @@
 const Query = {
-  items: async (parent, args, { itemModel }) => {
-    const items = await itemModel.find().sort();
-    return items;
-  },
   players: async (parent, { filter }, { playerModel }) => {
     const players = await playerModel
       .find({
@@ -10,7 +6,7 @@ const Query = {
         lanes: {
           $in:
             filter.lanes.length === 0
-              ? ["Top", "Jungle", "Middle", "Button", "Support"]
+              ? ["Top", "Jungle", "Middle", "Bottom", "Support"]
               : filter.lanes,
         },
         rank: {

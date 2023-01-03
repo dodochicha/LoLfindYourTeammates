@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import React from "react";
 import { Table, Layout, Button, Typography, Input, Avatar, Badge } from "antd";
-import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseOutlined,
+  CheckCircleTwoTone,
+  CloseCircleTwoTone,
+} from "@ant-design/icons";
 import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
@@ -15,6 +20,7 @@ const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 
 function InvitationList({ myPlayerName, setInvitationReadNum }) {
+  const [data, setData] = useState([]);
   const {
     loading,
     error,
@@ -30,13 +36,17 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
   } else {
     var invitations = [];
   }
-  console.log(invitations);
+  // console.log(invitations);
+  const result = invitations.filter(
+    (invitation) => invitation.to === myPlayerName
+  );
   const checkedReadNum = (invitations) => {
     const read = invitations.filter((invitation) => !invitation.read);
-    console.log(read);
-    console.log(invitations);
+    // console.log(read);
+    // console.log(invitations);
     return read.length;
   };
+  setInvitationReadNum(checkedReadNum(result));
   const acceptInvitation = (e) => {
     if (e.target.getAttribute("d") !== null) {
       var id = e.target.parentNode.parentNode.parentNode.className;
@@ -51,6 +61,11 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
         },
       },
     });
+    const idx = data.findIndex((obj) => obj._id === id);
+    var newData = data;
+    newData[idx].read = true;
+    newData[idx].ok = true;
+    setData(newData);
   };
   const rejectInvitation = (e) => {
     if (e.target.getAttribute("d") !== null) {
@@ -66,6 +81,11 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
         },
       },
     });
+    const idx = data.findIndex((obj) => obj._id === id);
+    var newData = data;
+    newData[idx].read = true;
+    newData[idx].ok = false;
+    setData(newData);
   };
   const fontColor = (invitation) => {
     if (invitation.read == false) return null;
@@ -74,7 +94,6 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
       else return "gray";
     }
   };
-  const checkedRead = (invitation) => (invitation.read ? true : false);
   const columns = [
     {
       title: "Sender",
@@ -82,24 +101,6 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
       render: (text, record) => (
         <a style={{ color: fontColor(record) }}>{text}</a>
       ),
-      // filters: [
-      //   {
-      //     text: "Joe",
-      //     value: "Joe",
-      //   },
-      //   {
-      //     text: "Category 1",
-      //     value: "Category 1",
-      //   },
-      //   {
-      //     text: "Category 2",
-      //     value: "Category 2",
-      //   },
-      // ],
-      // filterMode: "tree",
-      // filterSearch: true,
-      // onFilter: (value, record) => record.name.startsWith(value),
-      // width: "30%",
     },
     {
       title: "Date",
@@ -107,7 +108,6 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
       render: (text, record) => (
         <a style={{ color: fontColor(record) }}>{text}</a>
       ),
-      // sorter: (a, b) => a.age - b.age,
     },
     {
       title: "Time",
@@ -115,7 +115,6 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
       render: (text, record) => (
         <a style={{ color: fontColor(record) }}>{text}</a>
       ),
-      // sorter: (a, b) => a.age - b.age,
     },
     {
       title: "Message",
@@ -123,26 +122,19 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
       render: (text, record) => (
         <a style={{ color: fontColor(record) }}>{text}</a>
       ),
-      // filters: [
-      //   {
-      //     text: "London",
-      //     value: "London",
-      //   },
-      //   {
-      //     text: "New York",
-      //     value: "New York",
-      //   },
-      // ],
-      // onFilter: (value, record) => record.address.startsWith(value),
-      // filterSearch: true,
-      // width: "40%",
     },
     {
       title: "Action",
       dataIndex: "_id",
       key: "action",
       render: (_id, record) =>
-        checkedRead(record) ? null : (
+        record.read ? (
+          record.ok ? (
+            <CheckCircleTwoTone />
+          ) : (
+            <CloseCircleTwoTone />
+          )
+        ) : (
           <div className={_id}>
             <CheckOutlined onClick={acceptInvitation} />
             <CloseOutlined onClick={rejectInvitation} />
@@ -150,22 +142,22 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
         ),
     },
   ];
-  const result = invitations.filter(
-    (invitation) => invitation.to === myPlayerName
-  );
-  console.log(result, myPlayerName);
-  const data = result.map((invitation) => {
-    return {
-      sender: invitation.sender,
-      date: invitation.date,
-      time: invitation.time,
-      message: invitation.message,
-      _id: invitation._id,
-      ok: invitation.ok,
-      read: invitation.read,
-    };
-  });
-  setInvitationReadNum(checkedReadNum(result));
+  // console.log(result, myPlayerName);
+  useEffect(() => {
+    const newData = result.map((invitation) => {
+      return {
+        sender: invitation.sender,
+        date: invitation.date,
+        time: invitation.time,
+        message: invitation.message,
+        _id: invitation._id,
+        ok: invitation.ok,
+        read: invitation.read,
+      };
+    });
+    setData(newData);
+  }, []);
+
   return (
     <Table columns={columns} dataSource={data} className="invitation_table" />
   );
