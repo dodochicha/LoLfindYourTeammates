@@ -10,11 +10,10 @@ import {
   Space,
   TimePicker,
 } from "antd";
-import dayjs from "dayjs";
 
 const { TextArea } = Input;
 
-const InviteModal = ({ open, onCancel, player }) => {
+const InviteModal = ({ open, onCancel, player, setOpen }) => {
   const [form] = Form.useForm();
   const onChange = (date, dateString) => {
     console.log(date, dateString);
@@ -32,15 +31,19 @@ const InviteModal = ({ open, onCancel, player }) => {
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
-        console.log(
-          getItem().date.$M + 1,
-          getItem().date.$D,
-          //   getItem().time.$d.getDate(),
-          //   getItem().time.$d.getDate(),
-          getItem().time.$H,
-          getItem().time.$m,
-          getItem().message
-        );
+        form.submit();
+        if (getItem().date !== undefined && getItem().time) {
+          console.log(
+            getItem().date.$M + 1,
+            getItem().date.$D,
+            //   getItem().time.$d.getDate(),
+            //   getItem().time.$d.getDate(),
+            getItem().time.$H,
+            getItem().time.$m,
+            getItem().message
+          );
+          setOpen(false);
+        }
       }}
     >
       <div
@@ -58,10 +61,26 @@ const InviteModal = ({ open, onCancel, player }) => {
         layout="horizontal"
         form={form}
       >
-        <Form.Item label="Date" name="date">
+        <Form.Item
+          label="Date"
+          name="date"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
           <DatePicker onChange={onChange} />
         </Form.Item>
-        <Form.Item label="Time" name="time">
+        <Form.Item
+          label="Time"
+          name="time"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
           <TimePicker format={format} />
         </Form.Item>
         <Form.Item label="Message" name="message">

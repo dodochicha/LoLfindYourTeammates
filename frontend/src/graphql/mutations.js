@@ -34,7 +34,7 @@ export const CREATE_PLAYER_MUTATION = gql`
     createPlayer(input: $input) {
       id
       name
-      lane
+      lanes
       heros
       rank
     }
@@ -46,7 +46,7 @@ export const UPDATE_PLAYER_MUTATION = gql`
     updatePlayer(input: $input) {
       id
       name
-      lane
+      lanes
       heros
       rank
     }

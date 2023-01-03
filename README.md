@@ -20,10 +20,10 @@ npm run server
 
 ```graphql
 query players {
-  players(filter: { lane: [], rank: [] }) {
+  players(filter: { name: "", lanes: [], rank: [] }) {
     id
     name
-    lane
+    lanes
     heros
     rank
   }
@@ -38,14 +38,14 @@ mutation createPlayer {
     input: {
       id: "6"
       name: "Drx Deft"
-      lane: ["Ad"]
+      lanes: ["Button"]
       heros: ["凱特琳"]
       rank: "宗師"
     }
   ) {
     id
     name
-    lane
+    lanes
     heros
     rank
   }
@@ -53,19 +53,19 @@ mutation createPlayer {
 ```
 
 ```graphql
-mutation updatePlayer {
-  updatePlayer(
+mutation createPlayer {
+  createPlayer(
     input: {
-      id: "2"
-      name: "T1 Zeus"
-      lane: ["Top"]
-      heros: ["杰西", "厄薩斯"]
-      rank: "菁英"
+      id: "7"
+      name: "FW NL"
+      lanes: ["Button"]
+      heros: ["凱特琳"]
+      rank: "宗師"
     }
   ) {
     id
     name
-    lane
+    lanes
     heros
     rank
   }
@@ -79,7 +79,7 @@ subscription playerUpdated {
   playerUpdated {
     id
     name
-    lane
+    lanes
     heros
     rank
   }
@@ -91,7 +91,7 @@ subscription PlayerCreated {
   playerCreated {
     id
     name
-    lane
+    lanes
     heros
     rank
   }

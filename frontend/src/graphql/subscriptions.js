@@ -39,7 +39,7 @@ export const PLAYER_CREATED_SUBSCRIPTION = gql`
     playerCreated {
       id
       name
-      lane
+      lanes
       heros
       rank
     }
@@ -51,7 +51,7 @@ export const PLAYER_UPDATED_SUBSCRIPTION = gql`
     playerUpdated {
       id
       name
-      lane
+      lanes
       heros
       rank
     }

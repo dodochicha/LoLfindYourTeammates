@@ -20,7 +20,7 @@ export const GET_PLAYERS_QUERY = gql`
     players(filter: $filter) {
       id
       name
-      lane
+      lanes
       heros
       rank
     }

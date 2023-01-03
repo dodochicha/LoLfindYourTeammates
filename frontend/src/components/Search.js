@@ -14,15 +14,14 @@ const { Header, Content, Sider, Footer } = Layout;
 function Search() {
   const [laneFilter, setLaneFilter] = useState([]);
   const [rankFilter, setRankFilter] = useState([]);
-  const [filter, setFilter] = useState({ name: "", lane: [], rank: [] });
+  const [filter, setFilter] = useState({ name: "", lanes: [], rank: [] });
   const [nameFilter, setNameFilter] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [playerInvited, setPlayerInvited] = useState("");
   const { Search } = Input;
-  const { state } = useLocation();
-  console.log(state.username)
+  // console.log(state.username)
   useEffect(() => {
-    var newFilter = { ...filter, lane: laneFilter };
+    var newFilter = { ...filter, lanes: laneFilter };
     setFilter(newFilter);
   }, [laneFilter]);
   useEffect(() => {
@@ -33,6 +32,7 @@ function Search() {
     var newFilter = { ...filter, name: nameFilter };
     setFilter(newFilter);
   }, [nameFilter]);
+  useEffect(() => console.log(filter), [filter]);
   const {
     loading,
     error,
@@ -42,6 +42,7 @@ function Search() {
     variables: { filter: filter },
   });
   const navigate = useNavigate();
+  useEffect(() => console.log(playersData), [playersData]);
   if (playersData !== undefined) {
     var players = playersData.players.map((player) => ({
       ...player,
@@ -51,9 +52,11 @@ function Search() {
     players = [];
   }
   const handleToProfile = () => {
-    navigate("/profile",  { state: {
-      username: state.username
-    }});
+    navigate("/profile", {
+      state: {
+        username: localStorage.getItem("username"),
+      },
+    });
   };
   const handleInvite = (e) => {
     setModalOpen(true);
@@ -97,6 +100,7 @@ function Search() {
                 onSearch={onSearch}
                 style={{
                   width: 400,
+                  background: "rgba(255, 255, 255, 0)",
                 }}
               />
             </Content>
@@ -125,6 +129,7 @@ function Search() {
         onCancel={() => {
           setModalOpen(false);
         }}
+        setOpen={setModalOpen}
       />
       <Layout
         style={{

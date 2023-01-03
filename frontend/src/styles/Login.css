@@ -5,7 +5,7 @@ html, body {
 
 .Image-Background {
     background: url("../images/wallpaper4.jpg");
-    background-size: fit;
+    background-size: cover;
     /* height: 100%; */
     margin: 0;
     padding: 0;

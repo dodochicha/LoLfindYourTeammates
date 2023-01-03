@@ -3,23 +3,29 @@ import {
   CREATE_PLAYER_MUTATION,
   UPDATE_PLAYER_MUTATION,
 } from "../graphql/mutations";
-import { Link, useMatch, useResolvedPath, useNavigate, useLocation } from "react-router-dom";
+import {
+  Link,
+  useMatch,
+  useResolvedPath,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
-import { Form, Input, Select, Button, Layout, Space, Modal } from 'antd';
-import heroes from "../utils/heros_eng";
-import '../styles/Profile.css';
-import axios from '../api';
+import { Form, Input, Select, Button, Layout, Space, Modal } from "antd";
+import heroes_eng from "../utils/heros_eng";
+import heroes from "../utils/heros";
+import "../styles/Profile.css";
+import axios from "../api";
 
 function Profile() {
-  const { state } = useLocation();
-  const [username, setUsername] = useState(state.username)
-  const [id, setID] = useState("")
-  const [name , setName] = useState("")
-  const [lanes , setLanes] = useState([])
-  const [heros , setHeros] = useState([])
-  const [rank , setRank] = useState("")
-  const [formExist , setFormExist] = useState(false)
+  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [id, setID] = useState("");
+  const [name, setName] = useState("");
+  const [lanes, setLanes] = useState([]);
+  const [heros, setHeros] = useState([]);
+  const [rank, setRank] = useState("");
+  const [formExist, setFormExist] = useState(false);
 
   const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
   const [updatePlayer] = useMutation(UPDATE_PLAYER_MUTATION);
@@ -46,14 +52,15 @@ function Profile() {
   const handleQuery = async () => {
     const {
       data: { message, status, id, name, lanes, heros, rank },
-    } = await axios.get('/getProfile', {
+    } = await axios.get("/getProfile", {
       params: {
-        username
+        username,
       },
     });
+    console.log(message, status, id, name, lanes, heros, rank);
 
-    console.log(message, status, id, name, lanes, heros, rank)
-    if(status === "Filled"){
+    console.log(message, status, id, name, lanes, heros, rank);
+    if (status === "Filled") {
       setFormExist(true);
       setID(id);
       setName(name);
@@ -73,7 +80,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    console.log("use effect........")
+    console.log("use effect........");
     handleQuery();
   }, []);
 
@@ -87,7 +94,7 @@ function Profile() {
       values.SelectChamps,
       values.SelectRank
     );
-    
+
     if (!formExist) {
       var playerId = uuidv4();
       createPlayer({
@@ -95,7 +102,7 @@ function Profile() {
           input: {
             id: playerId,
             name: values.PlayerID,
-            lane: values.SelectLanes,
+            lanes: values.SelectLanes,
             heros: values.SelectChamps,
             rank: values.SelectRank,
           },
@@ -114,7 +121,7 @@ function Profile() {
       //   },
       // });
     }
-    navigate("/");
+    navigate("/search");
   };
   const onReset = () => {
     form.resetFields();
@@ -131,104 +138,131 @@ function Profile() {
   return (
     <div className="ProfilePage">
       <div className="Prof-Container">
-          <div className="Prof-Form">
-            <Space direction="horizontal" size={230} style={{ paddingBottom: "5%" }}>
-              <Header className="Prof-Text" > {" "}
-                  {username}'s Profile{" "} 
-              </Header>
-              <Sider style={{ background: "#5A3E1E" }}>
-                <Button
-                  type="primary"
-                  block
-                  htmlType="submit"
-                  size="large"
-                  style={{ background: "#5A3E1E" }}
-                  onClick={handleToSearch}
-                >
-                  Search
-                </Button>
-              </Sider>
-            </Space>
-            <Form
-              {...formItemLayout}
-              form={form}
-              name="myProfile"
-              onFinish={onFinish}
-              scrollToFirstError
+        <div className="Prof-Form">
+          <Space
+            direction="horizontal"
+            size={230}
+            style={{ paddingBottom: "5%" }}
+          >
+            <Header className="Prof-Text"> {username}'s Profile </Header>
+            <Sider style={{ background: "#5A3E1E" }}>
+              <Button
+                type="primary"
+                block
+                htmlType="submit"
+                size="large"
+                style={{ background: "#5A3E1E" }}
+                onClick={handleToSearch}
+              >
+                Search
+              </Button>
+            </Sider>
+          </Space>
+          <Form
+            {...formItemLayout}
+            form={form}
+            name="myProfile"
+            onFinish={onFinish}
+            scrollToFirstError
+          >
+            <Form.Item
+              name="PlayerID"
+              label="Player ID 名字"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your Player ID",
+                },
+              ]}
+              tooltip="Your in-game name."
             >
-               <Form.Item
-                name="PlayerID"
-                label="Player ID 名字"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your Player ID',
-                  },
-                ]}
-                tooltip="Your in-game name."
+              <Input onChange={handleChange(setName)} defaultValue={name} />
+            </Form.Item>
+            <Form.Item
+              name="SelectLanes"
+              label="Main Roles 擅長路線"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select your main roles!",
+                  type: "array",
+                },
+              ]}
+              tooltip="You can choose more than 1."
+            >
+              <Select
+                mode="multiple"
+                onChange={onLaneChange}
+                placeholder="Please select your main roles!"
+                defaultValue={lanes}
               >
-                <Input onChange={handleChange(setName)} defaultValue={name}/>
-              </Form.Item>
-              <Form.Item
-                name="SelectLanes"
-                label="Main Roles 擅長路線"
-                rules={[{ required: true, message: 'Please select your main roles!', type: 'array' }]}
-                tooltip="You can choose more than 1."
+                <Option value="Top">Top</Option>
+                <Option value="Jungle">Jungle</Option>
+                <Option value="Mid">Middle</Option>
+                <Option value="Bottom">Bottom</Option>
+                <Option value="Support">Support</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="SelectChamps"
+              label="Main Champions 擅長英雄"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select your main champions!",
+                  type: "array",
+                },
+              ]}
+              tooltip="You can choose more than 1."
+            >
+              <Select
+                mode="multiple"
+                onChange={onHerosChange}
+                placeholder="Please select your main champions!"
+                defaultValue={heros}
               >
-                <Select mode="multiple" onChange={ onLaneChange } placeholder="Please select your main roles!" defaultValue={lanes}>
-                  <Option value="top">Top</Option>
-                  <Option value="jungle">Jungle</Option>
-                  <Option value="mid">Middle</Option>
-                  <Option value="bottom">Bottom</Option>
-                  <Option value="support">Support</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="SelectChamps"
-                label="Main Champions 擅長英雄"
-                rules={[{ required: true, message: 'Please select your main champions!', type: 'array' }]}
-                tooltip="You can choose more than 1."
+                {heroes.map((hero, index) => (
+                  <Option value={hero}>{heroes_eng[index]}</Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="SelectRank"
+              label="Rank"
+              rules={[{ required: true, message: "Please select your rank!" }]}
+              tooltip="Your rank."
+            >
+              <Select
+                placeholder="Please select your rank"
+                onChange={onRankChange}
+                defaultValue={rank}
               >
-                <Select mode="multiple" onChange={ onHerosChange } placeholder="Please select your main champions!" defaultValue={heros}>
-                  {heroes.map((hero) =>
-                    <Option value={hero}>{hero}</Option>
-                  )}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                name="SelectRank"
-                label="Rank"
-                rules={[{ required: true, message: 'Please select your rank!' }]}
-                tooltip="Your rank."
-              >
-                <Select placeholder="Please select your rank" onChange={ onRankChange } defaultValue={rank}>
-                  <Option value="iron">Iron 鐵</Option>
-                  <Option value="bronze">Bronze 銅</Option>
-                  <Option value="silver">Silver 銀</Option>
-                  <Option value="gold">Gold 金</Option>
-                  <Option value="plat">Platinum 白金</Option>
-                  <Option value="diamond">Diamond 鑽石</Option>
-                  <Option value="master">Master 夭師</Option>
-                  <Option value="grand">Grandmaster 宗師</Option>
-                  <Option value="challenger">Challenger 菁英</Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                wrapperCol={{
-                  offset: 10,
-                  span: 20,
-                }}
-              >
-                <Button type="primary" htmlType="submit" size="large">
-                  Submit
-                </Button>
-                <Button htmlType="button" size="large" onClick={onReset}>
-                  Reset
-                </Button>
-              </Form.Item>
-            </Form>
-
-          </div>
+                <Option value="鐵">Iron 鐵</Option>
+                <Option value="銅">Bronze 銅</Option>
+                <Option value="銀">Silver 銀</Option>
+                <Option value="金">Gold 金</Option>
+                <Option value="白金">Platinum 白金</Option>
+                <Option value="鑽石">Diamond 鑽石</Option>
+                <Option value="大師">Master 大師</Option>
+                <Option value="宗師">Grandmaster 宗師</Option>
+                <Option value="菁英">Challenger 菁英</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                offset: 10,
+                span: 20,
+              }}
+            >
+              <Button type="primary" htmlType="submit" size="large">
+                Submit
+              </Button>
+              <Button htmlType="button" size="large" onClick={onReset}>
+                Reset
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
     </div>
   );

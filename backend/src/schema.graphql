@@ -25,14 +25,14 @@ type Item {
 type Player {
   id: ID!
   name: String!
-  lane: [String!]!
+  lanes: [String!]!
   heros: [String!]!
   rank: String!
 }
 
 input Filter {
   name: String
-  lane: [String]
+  lanes: [String]
   rank: [String]
 }
 
@@ -62,7 +62,7 @@ input UpdateItemInput {
 input CreatePlayerInput {
   id: ID!
   name: String!
-  lane: [String!]!
+  lanes: [String!]!
   heros: [String!]!
   rank: String!
 }
@@ -70,7 +70,7 @@ input CreatePlayerInput {
 input UpdatePlayerInput {
   id: ID!
   name: String!
-  lane: [String!]!
+  lanes: [String!]!
   heros: [String!]!
   rank: String!
 }
