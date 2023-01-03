@@ -63,7 +63,7 @@ const Mutation = {
       {
         $set: {
           name: input.name,
-          lane: input.lane,
+          lanes: input.lane,
           heros: input.heros,
           rank: input.rank,
         },
@@ -72,7 +72,7 @@ const Mutation = {
     const newPlayer = {
       id: input.id ?? item.id,
       name: input.name ?? player.name,
-      lane: input.lane ?? player.lane,
+      lanes: input.lane ?? player.lane,
       heros: input.heros ?? player.lane,
       rank: input.rank ?? player.lane,
     };

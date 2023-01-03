@@ -16,9 +16,9 @@ const columns = (handelInvite) => [
     title: "Lane",
     key: "lane",
     dataIndex: "lane",
-    render: (_, { lane }) => (
+    render: (_, { lanes }) => (
       <>
-        {lane.map((tag) => (
+        {lanes.map((tag) => (
           <Tag color="blue" key={tag}>
             {tag}
           </Tag>

@@ -7,11 +7,11 @@ const Query = {
     const players = await playerModel
       .find({
         name: { $regex: filter.name },
-        lane: {
+        lanes: {
           $in:
-            filter.lane.length === 0
+            filter.lanes.length === 0
               ? ["Top", "Jungle", "Middle", "Button", "Support"]
-              : filter.lane,
+              : filter.lanes,
         },
         rank: {
           $in:
