@@ -114,9 +114,9 @@ function Login() {
                 onChange={handleChange(setPassword)}
               />
             </Form.Item>
-
             <Form.Item
-              className="Footer-Form-Frame">
+              className="Footer-Form-Frame"
+            />
                 {/* <Space direction="horizontal" size={100}> */}
                 <Form.Item
                   // style={{ display: "inline" padding-bottom: 2%;}}
