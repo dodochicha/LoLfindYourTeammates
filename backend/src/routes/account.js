@@ -41,20 +41,20 @@ router.post("/newUser", async (req, res) => {
     }
 });
 
-router.post("/userLogin", async (req, res) => {
+router.get("/userLogin", async (req, res) => {
     try {
-        if (!req.body.username) {
+        if (!req.query.username) {
             return res.json({ message: "Please enter your username.", status: "Error" });   
         }
-        else if (!req.body.password) {
+        else if (!req.query.password) {
             return res.json({ message: "Please enter your password.", status: "Error" });
         }
         else{
-            let user = await User.findOne({ username: req.body.username }); 
+            let user = await User.findOne({ username: req.query.username }); 
             if( !user ){
                 return res.json({ message: "This username has not been registered yet!", status: "Error" });
             }
-            if(await bcrypt.compare(req.body.password, user.password)){
+            if(await bcrypt.compare(req.query.password, user.password)){
                 return res.json({ message: "Password is correct", status: "Success" });
             }
             else{
@@ -62,8 +62,23 @@ router.post("/userLogin", async (req, res) => {
             }
         }
     } catch (event) {
-        res.json({ message: "Database insertion failed", status: "Error" });   
-        throw new Error("Database insertion failed");
+        res.json({ message: "Database query failed", status: "Error" });   
+        throw new Error("Database query failed");
+    }
+});
+
+router.get("/getProfile", async (req, res) => {
+    try {
+        let user = await User.findOne({ username: req.query.username }); 
+        if( !user.player ){
+            return res.json({ message: "The form has never been filled.", status: "NotFilledYet" });
+        }
+        else{
+            return res.json({ message: "The form has been filled.", status: "Filled", id: user.player.id, name: user.player.name, lanes: user.player.lanes, heros: user.player.heros, rank: user.player.rank })
+        }
+    } catch (event) {
+        res.json({ message: "Database query failed", status: "Error" });   
+        throw new Error("Database query failed");
     }
 });
 
