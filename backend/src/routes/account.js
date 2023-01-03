@@ -41,20 +41,20 @@ router.post("/newUser", async (req, res) => {
     }
 });
 
-router.post("/userLogin", async (req, res) => {
+router.get("/userLogin", async (req, res) => {
     try {
-        if (!req.body.username) {
+        if (!req.query.username) {
             return res.json({ message: "Please enter your username.", status: "Error" });   
         }
-        else if (!req.body.password) {
+        else if (!req.query.password) {
             return res.json({ message: "Please enter your password.", status: "Error" });
         }
         else{
-            let user = await User.findOne({ username: req.body.username }); 
+            let user = await User.findOne({ username: req.query.username }); 
             if( !user ){
                 return res.json({ message: "This username has not been registered yet!", status: "Error" });
             }
-            if(await bcrypt.compare(req.body.password, user.password)){
+            if(await bcrypt.compare(req.query.password, user.password)){
                 return res.json({ message: "Password is correct", status: "Success" });
             }
             else{

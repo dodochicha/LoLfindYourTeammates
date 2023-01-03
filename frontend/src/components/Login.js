@@ -37,10 +37,12 @@ function Login() {
 
   const handleUserLogin = async () => {
     const {
-      data: { message, status },
-    } = await axios.post("/userLogin", {
-      username,
-      password,
+      data: { message, status},
+    } = await axios.get('/userLogin', {
+      params: {
+        username,
+        password,
+      },
     });
 
     console.log(message, status);
@@ -49,8 +51,11 @@ function Login() {
         title: "This is an error message!",
         content: message,
       });
-    } else {
-      navigate("/search");
+    }
+    else{
+      navigate("/search", { state: {
+        username: username
+      }});
     }
   };
 
@@ -121,11 +126,20 @@ function Login() {
                 >
                   <Checkbox className="Form-Footer-Name">Remember me</Checkbox>
                 </Form.Item>
-              <Space direction="vertical" size={1}>
-                <MyLinks to="/login" className="Form-Footer-Name-2">
-                  Forgot Password
-                </MyLinks>
-                {/* </Space> */}
+                <Form.Item>
+                    <Space direction="vertical">
+                        <Space direction="horizontal" size={100}>
+                        <Form.Item
+                            style={{ display: "inline" }}
+                            name="remember"
+                            valuePropName="checked"
+                        >
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                        <MyLinks to="/login" className="login-form-have-account">
+                            Forgot Password
+                        </MyLinks>
+                        </Space>
 
                 <MyLinks to="/register" className="Form-Footer-Name-2">
                   Don't have an account? Create account here!
