@@ -86,8 +86,8 @@ router.get("/userLogin", async (req, res) => {
       }
     }
   } catch (event) {
-    res.json({ message: "Database query failed", status: "Error" });
-    throw new Error("Database query failed");
+    res.json({ message: "userLogin query failed", status: "Error" });
+    throw new Error("userLogin query failed");
   }
 });
 

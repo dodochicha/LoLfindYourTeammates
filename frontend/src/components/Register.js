@@ -16,7 +16,7 @@ function Register() {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log('Success:', values.username);
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
@@ -69,9 +69,9 @@ function Register() {
                 <Form.Item
                     className="Reg-Form-Frame"
                     name="username"
+                    label={<h2 className="Reg-Form-Name">Username</h2>}
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
-                     <h2 className="Reg-Form-Name">Email</h2>
                     <Input 
                       className= "Form-Box"
                       // prefix={<UserOutlined className="Reg-site-form-item-icon" />} 
@@ -82,9 +82,9 @@ function Register() {
                 <Form.Item
                     className="Reg-Form-Frame"
                     name="password"
+                    label={<h2 className="Reg-Form-Name">Password</h2>}
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                    <h2 className="Reg-Form-Name">Password</h2>
                     <Input.Password
                       className="Reg-Form-Box"
                       type="password"
@@ -97,6 +97,7 @@ function Register() {
                 <Form.Item
                     className="Reg-Form-Frame"
                     name="password2"
+                    label={<h2 className="Reg-Form-Name">Confirm Password</h2> }
                     validateTrigger="onBlur"
                     rules={[
                         { required: true, 
@@ -112,7 +113,6 @@ function Register() {
                         }),
                     ]}
                 >
-                    <h2 className="Reg-Form-Name">Confirm Password</h2> 
                     <Input.Password
                       className="Reg-Form-Box"
                       type="password"
