@@ -1,26 +1,35 @@
 import React from 'react';
+import '../styles/Font.css';
 import '../styles/Home.css';
 import { Button, Space, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <div className="HomePage">
-        <h2 className="Header-Text"> Welcome back!  </h2>
-        <h1 className="Header-Text-2">  Can't find a teammate? LOL! </h1>
-        <div className="ButtonsContainer">
-            <Space wrap>
-                <Link to="/login">
-                    <Button type="primary" size="large" style={{ background: "#5A3E1E" }} >
-                        Sign in
-                    </Button>
-                </Link>
-                <Link to="/register">
-                    <Button type="primary" size="large" style={{ background: "#5A3E1E" }} >
-                        Create account
-                    </Button>
-                </Link>
-            </Space>
+    <div>
+        <div className="Home-Image-Background">
+            <div className="Background"></div>
+            <div className="Gradient"></div>
+        </div>
+        <div className="Login-Background">
+            <div className="Login-Frame">
+                <div className="Login">
+                    <div className="Header-Frame"> <p className="Header-Text">go and find your teammates</p></div>
+                    <Link to="/login">
+                        <Button className="Button-Frame">
+                            Sign In
+                        </Button>
+                    </Link>
+                    <div className="Footer-Frame">
+                        Don’t have an account yet ?
+                        <Link className="Footer-Link" to="/register">
+                            Register Now
+                        </Link>
+                    </div>
+                        {/* </Space> */}
+                    {/* </div> */}
+                </div>
+            </div>
         </div>
     </div>
   );

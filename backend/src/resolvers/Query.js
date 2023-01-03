@@ -6,10 +6,11 @@ const Query = {
   players: async (parent, { filter }, { playerModel }) => {
     const players = await playerModel
       .find({
+        name: { $regex: filter.name },
         lane: {
           $in:
             filter.lane.length === 0
-              ? ["Top", "Jungle", "Mid", "Ad", "Sup"]
+              ? ["Top", "Jungle", "Middle", "Button", "Support"]
               : filter.lane,
         },
         rank: {

@@ -1,6 +1,6 @@
 import { Space, Table, Tag } from "antd";
 
-const columns = [
+const columns = (handelInvite) => [
   {
     title: "Name",
     dataIndex: "name",
@@ -44,7 +44,7 @@ const columns = [
     title: "Action",
     key: "action",
     render: (_, record) => (
-      <Space size="middle">
+      <Space size="middle" onClick={handelInvite}>
         <a>Invite {record.name}</a>
       </Space>
     ),

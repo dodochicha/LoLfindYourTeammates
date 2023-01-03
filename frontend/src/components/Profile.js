@@ -62,7 +62,7 @@ function Profile() {
       data: { message, status, account_type },
     } = await axios.get('/getProfile', {
       params: {
-      
+ 
       },
     });
 
@@ -77,20 +77,11 @@ function Profile() {
       navigate("/login");
     }
   };
-
-  const [formData, setFormData] = useState(sanitizedDefaultFormData);
-  const [errors, setErrors] = useState({
-    name: false,
-    lane: false,
-    heros: false,
-  });
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const tailLayout = {
+    wrapperCol: {
+      offset: 8,
+      span: 16,
+    },
   };
 
 
@@ -133,7 +124,6 @@ function Profile() {
       // });
     }
   };
-
   const onReset = () => {
     form.resetFields();
   };

@@ -1,33 +1,208 @@
-.HomePage {
-    box-sizing: border-box;
-    background-color: #13181B;
-    /* margin: auto 0;
-    padding: 0; */
-    font-family: 'Montserrat', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-content: center;
+.Home-Image-Background {
+    /* Auto layout */
+    /* display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    color: #EDB852;
+    align-items: flex-start;
+    padding: 0px; */
+
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    margin: 0;
+    padding: 0;
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+
+    /* Inside auto layout */
+    /* flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1; */
+}
+.Background {
+    
+    width: 1440px;
+    height: 712px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+
+    background: url("../images/wallpaper6.jpg");
+
+}
+
+.Gradient {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+
+    position: absolute;
+    width: 1460px;
+    height: 692px;
+    left: -10px;
+    top: -10px;
+
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 54.22%, #101114 86.46%);
+}
+
+.Login-Background {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
+
+    position: absolute;
+    width: 1443px;
+    height: 423px;
+    left: 0px;
+    top: 608px;
+
+    background: #101114;
+}
+
+.Login-Frame {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 441px;
+    gap: 10px;
+
+    width: 1444px;
+    height: 418px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Login {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0px 0px;
+    gap: 15px;
+
+    width: 562px;
+    height: 278px;
+
+    border-radius: 20px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Header-Frame {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px 10px 45px;
+    gap: 10px;
+
+    width: 582px;
+    height: 127px;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 }
 
 .Header-Text {
-    align-self: center;
-    margin-top: 10%;
-    margin-bottom: 0%;
-    font-weight: 600;
-    font-size: 1.5rem;
-    letter-spacing: 0.3em;
+    /* width: 542px;
+    height: 52px; */
+
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 52px;
+    /* identical to box height */
+    text-align: center;
+
+    color: #FFFFFF;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
 }
 
-.Header-Text-2 {
-    font-weight: 800;
-    letter-spacing: 0.2em;
-}
-
-.ButtonsContainer {
-    margin-top: 2%;
+.Button-Frame {  
+    /* Auto layout */
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 135px;
+    gap: 10px;
     justify-content: center;
+    align-items: center;
+
+    width: 346px;
+    height: 71px;
+
+    background: #8B00FF;
+    border-radius: 20px;
+
+    /* Name styling */
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
+    line-height: 31px;
+    text-align: center;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+
+.Footer-Frame {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #FFFFFF;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+}
+
+.Footer-Link {
+    color: #FFFFFF;
 }

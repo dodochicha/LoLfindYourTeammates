@@ -48,12 +48,14 @@ function Register() {
   };
   
   return (
-    <div className="RegisterPage">
-        {/* <h1 className="Reg-Text"> Create Account </h1> */}
-        <div className="Reg-Container">
-          <div className="Reg-Form">
-            <h1 className="Reg-Text"> Create Account </h1>
+    <div className="Reg-Image-Background">
+        {/* <h1 className="Reg-Reg-Text"> Create Account </h1> */}
+        <div className="Reg-header"></div>
+        <div className="Reg-Form-Container">
+          <div className="Reg-Form-Background">
+            <h1 className="Reg-Form-Header"> Register </h1>
             <Form
+              className="Reg-Forms-Frame"
               name="basic"
               form={form}
               // wrapperCol={{
@@ -65,24 +67,35 @@ function Register() {
               autoComplete="off"
             >
                 <Form.Item
+                    className="Reg-Form-Frame"
                     name="username"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" size="large" onChange={handleChange(setUsername)}/>
+                     <h2 className="Reg-Form-Name">Email</h2>
+                    <Input 
+                      className= "Form-Box"
+                      // prefix={<UserOutlined className="Reg-site-form-item-icon" />} 
+                      // placeholder="Username" 
+                      // size="large" 
+                      onChange={handleChange(setUsername)}/>
                 </Form.Item>
                 <Form.Item
+                    className="Reg-Form-Frame"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password!' }]}
                 >
+                    <h2 className="Reg-Form-Name">Password</h2>
                     <Input.Password
-                    prefix={<LockOutlined className="site-form-item-icon" />}
-                    type="password"
-                    placeholder="Password"
-                    size="large"
-                    onChange={handleChange(setPassword)}
+                      className="Reg-Form-Box"
+                      type="password"
+                      // prefix={<LockOutlined className="Reg-site-form-item-icon" />}
+                      // placeholder="Password"
+                      // size="large"
+                      onChange={handleChange(setPassword)}
                     />
                 </Form.Item>
                 <Form.Item
+                    className="Reg-Form-Frame"
                     name="password2"
                     validateTrigger="onBlur"
                     rules={[
@@ -99,36 +112,49 @@ function Register() {
                         }),
                     ]}
                 >
+                    <h2 className="Reg-Form-Name">Confirm Password</h2> 
                     <Input.Password
-                    prefix={<LockOutlined className="site-form-item-icon" />}
-                    type="password"
-                    placeholder="Confirm password"
-                    size="large"
-                    onChange={handleChange(setPassword2)}
+                      className="Reg-Form-Box"
+                      type="password"
+                      // prefix={<LockOutlined className="Reg-site-form-item-icon" />}
+                      // placeholder="Confirm password"
+                      // size="large"
+                      onChange={handleChange(setPassword2)}
                     />
                 </Form.Item>
-                <Form.Item>
-                    <Space direction="horizontal" size={100}>
-                        <MyLinks to="/login" className="login-form-have-account">
-                            Already have an account? Sign in here!
-                        </MyLinks>
-                        <Form.Item style={{ display: "inline"}} ></Form.Item>
-                    </Space>
+                <Form.Item
+                  className="Reg-Footer-Form-Frame"
+                >
+                  <Space direction="vertical" size={1}>
+                      <MyLinks to="/login" className="Reg-Form-Footer-Name-2">
+                          Already have an account? Sign in here!
+                      </MyLinks>
+                      <Form.Item style={{ display: "inline"}} ></Form.Item>
+                  </Space>
               </Form.Item>
               
               <Form.Item
+                className="Reg-Button"
                 // wrapperCol={{
                 //   offset: 10,
                 //   span: 20,
                 // }}
               >
-                <Button type="primary" block htmlType="submit" size="large" style={{ background: "#5A3E1E" }} onClick={handleNewUser} >
-                  Create account
+                <Button 
+                  className="Reg-Button-Color"
+                  type="primary" 
+                  block htmlType="submit" 
+                  size="large" 
+                  // style={{ background: "#5A3E1E" }} 
+                  onClick={handleNewUser} 
+                >
+                  Register
                 </Button>
               </Form.Item>
             </Form>
           </div>
         </div>
+        <div className="Reg-footer"></div>
     </div>
   );
 }
