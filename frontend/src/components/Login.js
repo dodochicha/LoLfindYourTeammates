@@ -28,9 +28,11 @@ function Login() {
   const handleUserLogin = async () => {
     const {
       data: { message, status},
-    } = await axios.post('/userLogin', {
-      username,
-      password,
+    } = await axios.get('/userLogin', {
+      params: {
+        username,
+        password,
+      },
     });
 
     console.log(message, status)
@@ -41,7 +43,9 @@ function Login() {
       });
     }
     else{
-      navigate("/");
+      navigate("/search", { state: {
+        username: username
+      }});
     }
   };
 
@@ -91,7 +95,6 @@ function Login() {
                             style={{ display: "inline" }}
                             name="remember"
                             valuePropName="checked"
-                            nostyle
                         >
                             <Checkbox>Remember me</Checkbox>
                         </Form.Item>
