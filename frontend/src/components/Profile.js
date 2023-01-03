@@ -17,9 +17,10 @@ import heroes_eng from "../utils/heros_eng";
 import heroes from "../utils/heros";
 import "../styles/Profile.css";
 import axios from "../api";
+import { useHook } from "../hooks/useHook";
 
 function Profile() {
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const { username, setUsername } = useHook();
   const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [lanes, setLanes] = useState([]);
@@ -57,8 +58,6 @@ function Profile() {
         username,
       },
     });
-    console.log(message, status, id, name, lanes, heros, rank);
-
     console.log(message, status, id, name, lanes, heros, rank);
     if (status === "Filled") {
       setFormExist(true);

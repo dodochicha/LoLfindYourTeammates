@@ -11,9 +11,6 @@ const UserSchema = new Schema(
             ref: 'Player'
         }
     },
-    {
-        collection: "user",
-    }
 );
 
 const UserModel = mongoose.model('User', UserSchema);
