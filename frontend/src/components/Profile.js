@@ -17,9 +17,10 @@ import heroes_eng from "../utils/heros_eng";
 import heroes from "../utils/heros";
 import "../styles/Profile.css";
 import axios from "../api";
+import { useHook } from "../hooks/useHook";
 
 function Profile() {
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const { username, password } = useHook();
   const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [lanes, setLanes] = useState([]);
@@ -57,9 +58,7 @@ function Profile() {
         username,
       },
     });
-    console.log(message, status, id, name, lanes, heros, rank);
-
-    console.log(message, status, id, name, lanes, heros, rank);
+    console.log(message, status);
     if (status === "Filled") {
       setFormExist(true);
       setID(id);
@@ -68,21 +67,32 @@ function Profile() {
       setHeros(heros);
       setRank(rank);
     }
-    // if(status === "Error"){
-    //   Modal.error({
-    //     title: 'This is an error message!',
-    //     content: message
-    //   });
-    // }
-    // else{
-    //   navigate("/");
-    // }
   };
+
+  const handleProfile = async (playerId) => {
+    const {
+      data: {message, status},
+    } = await axios.post("/updateProfile", {
+      username,
+      playerId,
+    })
+    console.log(message, status);
+  }
 
   useEffect(() => {
     console.log("use effect........");
     handleQuery();
   }, []);
+
+  useEffect(() => {
+    console.log(id, name, lanes, heros, rank)
+    form.setFieldsValue({
+      PlayerID: name,
+      SelectLanes: lanes,
+      SelectChamps: heros,
+      SelectRank: rank
+    });
+  }, [id, name, lanes, heros, rank]);
 
   const [form] = Form.useForm();
   const { Option } = Select;
@@ -94,7 +104,13 @@ function Profile() {
       values.SelectChamps,
       values.SelectRank
     );
-
+    console.log(
+      values.PlayerID,
+      values.SelectLanes,
+      values.SelectChamps,
+      values.SelectRank);
+    
+    console.log(formExist)
     if (!formExist) {
       var playerId = uuidv4();
       createPlayer({
@@ -108,18 +124,20 @@ function Profile() {
           },
         },
       });
+      handleProfile(playerId);
     } else {
-      // updatePlayer({
-      //   variables: {
-      //     input: {
-      //       id: id,
-      //       name: values.PlayerID,
-      //       lane: values.SelectLanes,
-      //       heros: values.SelectChamps,
-      //       rank: values.SelectRank,
-      //     },
-      //   },
-      // });
+      updatePlayer({
+        variables: {
+          input: {
+            id: id,
+            name: values.PlayerID,
+            lanes: values.SelectLanes,
+            heros: values.SelectChamps,
+            rank: values.SelectRank,
+          },
+        },
+      });
+      handleProfile(id);
     }
     navigate("/search");
   };
@@ -163,6 +181,9 @@ function Profile() {
             form={form}
             name="myProfile"
             onFinish={onFinish}
+            initialValues={{
+              PlayerID: name
+            }}
             scrollToFirstError
           >
             <Form.Item

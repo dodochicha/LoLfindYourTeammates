@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import PlayerModel from './player.js';
 
 const { Schema } = mongoose;
 
@@ -8,12 +9,9 @@ const UserSchema = new Schema(
         password: { type: String, required: [true, 'Password field is required.'] },
         player: { 
             type: mongoose.Types.ObjectId,
-            ref: 'Player'
+            ref: PlayerModel
         }
     },
-    {
-        collection: "user",
-    }
 );
 
 const UserModel = mongoose.model('User', UserSchema);

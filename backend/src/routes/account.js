@@ -1,5 +1,6 @@
 import { Router } from "express";
 import User from "../models/user.js";
+import Player from "../models/player.js";
 import bcrypt from "bcrypt";
 
 const router = Router();
@@ -86,33 +87,57 @@ router.get("/userLogin", async (req, res) => {
       }
     }
   } catch (event) {
-    res.json({ message: "Database query failed", status: "Error" });
-    throw new Error("Database query failed");
+    res.json({ message: "userLogin failed", status: "Error" });
+    throw new Error("userLogin failed");
   }
 });
 
 router.get("/getProfile", async (req, res) => {
   try {
     let user = await User.findOne({ username: req.query.username });
-    if (!user.player) {
+    if (user.player === undefined) {
       return res.json({
         message: "The form has never been filled.",
         status: "NotFilledYet",
       });
     } else {
+      let player = await Player.findById(user.player.toString());
       return res.json({
         message: "The form has been filled.",
         status: "Filled",
-        id: user.player.id,
-        name: user.player.name,
-        lanes: user.player.lanes,
-        heros: user.player.heros,
-        rank: user.player.rank,
+        id: player.id,
+        name: player.name,
+        lanes: player.lanes,
+        heros: player.heros,
+        rank: player.rank,
       });
     }
   } catch (event) {
-    res.json({ message: "Database query failed", status: "Error" });
-    throw new Error("Database query failed");
+    res.json({ message: "getProfile failed", status: "Error" });
+    throw new Error("getProfile failed");
+  }
+});
+
+router.post("/updateProfile", async (req, res) => {
+  try {
+    let user = await User.findOne({ username: req.body.username });
+    let player= await Player.findOne({ id: req.body.playerId });
+    if (!player) {
+      return res.json({
+        message: "The player doesn't exist.",
+        status: "Error",
+      });
+    } else {
+      user.player = player._id;
+      user.save();
+      return res.json({
+        message: "The player exists.",
+        status: "Success",
+      });
+    }
+  } catch (event) {
+    res.json({ message: "/updateProfile failed", status: "Error" });
+    throw new Error("/updateProfil failed");
   }
 });
 

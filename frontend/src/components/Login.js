@@ -11,21 +11,33 @@ import {
 } from "@ant-design/icons";
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import axios from "../api";
-
-const LOCALSTORAGE_KEY = "username";
-const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
+import { useHook } from "../hooks/useHook";
 
 function Login() {
   // console.log("login...");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const LOCALSTORAGE_KEY_USERNAME = "username";
+  const LOCALSTORAGE_KEY_PASSWORD = "password";
+  const savedUsername = localStorage.getItem(LOCALSTORAGE_KEY_USERNAME);
+  const savedPassword = localStorage.getItem(LOCALSTORAGE_KEY_PASSWORD);
+  const {rememberMe, setRememberMe, username, setUsername, password, setPassword } = useHook();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  useEffect(() => {
-    localStorage.setItem("username", username);
-  }, [username]);
+
+  // useEffect(() => {
+  //   console.log(rememberMe)
+    
+  // }, [rememberMe]);
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    console.log("Success:", values.username);
+    if(rememberMe) {
+      localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, username);
+      localStorage.setItem(LOCALSTORAGE_KEY_PASSWORD, password);
+    }
+    else{
+        localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, "");
+        localStorage.setItem(LOCALSTORAGE_KEY_PASSWORD, "");
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -35,13 +47,17 @@ function Login() {
     func(event.target.value);
   };
 
+  const handleCheckbox = (event) => {
+    setRememberMe(event.target.checked);
+  };
+
   const handleUserLogin = async () => {
     const {
       data: { message, status },
     } = await axios.get("/userLogin", {
       params: {
-        username,
-        password,
+        username: savedUsername || username,
+        password: savedPassword || password,
       },
     });
 
@@ -52,11 +68,7 @@ function Login() {
         content: message,
       });
     } else {
-      navigate("/search", {
-        state: {
-          username: username,
-        },
-      });
+      navigate("/search");
     }
   };
 
@@ -75,7 +87,9 @@ function Login() {
             //   span: 16,
             // }}
             initialValues={{
-              remember: true,
+              remember: rememberMe,
+              username: savedUsername,
+              password: savedPassword
             }}
             layout="vertical"
             onFinish={onFinish}
@@ -85,11 +99,11 @@ function Login() {
             <Form.Item
               className="Form-Frame"
               name="username"
+              label={<h2 className="Form-Name">Username</h2>}
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <h2 className="Form-Name">Email</h2>
               <Input
                 className="Form-Box"
                 // prefix={<UserOutlined className="site-form-item-icon" />}
@@ -101,11 +115,11 @@ function Login() {
             <Form.Item
               className="Form-Frame"
               name="password"
+              label={<h2 className="Form-Name">Password</h2>}
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <h2 className="Form-Name">Password</h2>
               <Input.Password
                 className="Form-Box"
                 // prefix={<LockOutlined className="site-form-item-icon" />}
@@ -121,9 +135,9 @@ function Login() {
                 // style={{ display: "inline" padding-bottom: 2%;}}
                 name="remember"
                 valuePropName="checked"
-                // nostyle
+                // nostyle="true"
               >
-                <Checkbox className="Form-Footer-Name">Remember me</Checkbox>
+                <Checkbox className="Form-Footer-Name" checked={rememberMe} onChange={handleCheckbox}>Remember me</Checkbox>
               </Form.Item>
               <Form.Item>
                 <MyLinks to="/register" className="Form-Footer-Name-2">
