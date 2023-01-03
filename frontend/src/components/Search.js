@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_PLAYERS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import React from "react";
 import { Table, Layout, Button, Typography, Input, Avatar, Badge } from "antd";
 import { NotificationOutlined } from "@ant-design/icons";
@@ -9,20 +9,42 @@ import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
 import InviteModal from "./InviteModal";
-import InvitationList from "./InvitationList";
+import InvitationModal from "./InvitationModal";
+import axios from "../api";
+import { useHook } from "../hooks/useHook";
 
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 
 function Search() {
+  const { username } = useParams();
   const [laneFilter, setLaneFilter] = useState([]);
   const [rankFilter, setRankFilter] = useState([]);
   const [filter, setFilter] = useState({ name: "", lanes: [], rank: [] });
   const [nameFilter, setNameFilter] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [invitationModalOpen, setInvitationModalOpen] = useState(false);
   const [playerInvited, setPlayerInvited] = useState("");
+  const [invitationReadNum, setInvitationReadNum] = useState(0);
+  const [myPlayerName, setMyPlayerName] = useState("");
   const { Search } = Input;
-  // console.log(state.username)
+  const findPlayerName = async () => {
+    const {
+      data: { message, status, id, name, lanes, heros, rank },
+    } = await axios.get("/getProfile", {
+      params: {
+        username,
+      },
+    });
+    if (name !== undefined) setMyPlayerName(name);
+  };
+  useEffect(() => {
+    console.log("username:", username);
+    findPlayerName();
+  }, []);
+  useEffect(() => {
+    console.log(myPlayerName);
+  }, [myPlayerName]);
   useEffect(() => {
     var newFilter = { ...filter, lanes: laneFilter };
     setFilter(newFilter);
@@ -35,7 +57,7 @@ function Search() {
     var newFilter = { ...filter, name: nameFilter };
     setFilter(newFilter);
   }, [nameFilter]);
-  useEffect(() => console.log(filter), [filter]);
+  // useEffect(() => console.log(filter), [filter]);
   const {
     loading,
     error,
@@ -45,7 +67,7 @@ function Search() {
     variables: { filter: filter },
   });
   const navigate = useNavigate();
-  useEffect(() => console.log(playersData), [playersData]);
+  // useEffect(() => console.log(players), [players]);
   if (playersData !== undefined) {
     var players = playersData.players.map((player) => ({
       ...player,
@@ -55,15 +77,18 @@ function Search() {
     players = [];
   }
   const handleToProfile = () => {
-    navigate("/profile", {
+    navigate(`/profile/${username}`, {
       state: {
-        username: localStorage.getItem("username"),
+        username,
       },
     });
   };
   const handleInvite = (e) => {
     setModalOpen(true);
     setPlayerInvited(e.target.innerText.slice(7));
+  };
+  const handleInvitationModalOpen = () => {
+    setInvitationModalOpen(true);
   };
   const ShowTime = () => {
     var NowDate = new Date();
@@ -108,13 +133,17 @@ function Search() {
               />
             </Content>
             <Content>
-              <Badge count={1}>
+              <Badge count={invitationReadNum}>
                 <Avatar
                   shape="square"
-                  icon={<NotificationOutlined style={{ fontSize: "20px" }} />}
+                  icon={
+                    <NotificationOutlined
+                      style={{ fontSize: "20px" }}
+                      onClick={handleInvitationModalOpen}
+                    />
+                  }
                 />
               </Badge>
-              <InvitationList></InvitationList>
             </Content>
             <Sider
               style={{
@@ -142,6 +171,13 @@ function Search() {
           setModalOpen(false);
         }}
         setOpen={setModalOpen}
+        myPlayerName={myPlayerName}
+      />
+      <InvitationModal
+        open={invitationModalOpen}
+        setOpen={setInvitationModalOpen}
+        myPlayerName={myPlayerName}
+        setInvitationReadNum={setInvitationReadNum}
       />
       <Layout
         style={{
@@ -200,7 +236,7 @@ function Search() {
             </Content>
           </Layout>
           <Table
-            columns={columns(handleInvite)}
+            columns={columns({ handleInvite, myPlayerName })}
             dataSource={players}
             className="table"
           />

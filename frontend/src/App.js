@@ -16,19 +16,19 @@ function App() {
   return (
     <>
       <CssBaseline />
-        <HookProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="search" element={<Search />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="player" element={<Player />} />
-              <Route path="*" element={<h1>Error, Page Not Found</h1>} />
-            </Routes>
-          </BrowserRouter>
-        </HookProvider>
+      <HookProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/search/:username" element={<Search />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/player" element={<Player />} />
+            <Route path="*" element={<h1>Error, Page Not Found</h1>} />
+          </Routes>
+        </BrowserRouter>
+      </HookProvider>
     </>
   );
 }

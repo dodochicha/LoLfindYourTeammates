@@ -14,29 +14,30 @@ import axios from "../api";
 import { useHook } from "../hooks/useHook";
 
 function Login() {
-  // console.log("login...");
-  const LOCALSTORAGE_KEY_USERNAME = "username";
-  const LOCALSTORAGE_KEY_PASSWORD = "password";
+  const LOCALSTORAGE_KEY_USERNAME = "saved-username";
+  const LOCALSTORAGE_KEY_PASSWORD = "saved-password";
+
   const savedUsername = localStorage.getItem(LOCALSTORAGE_KEY_USERNAME);
   const savedPassword = localStorage.getItem(LOCALSTORAGE_KEY_PASSWORD);
-  const {rememberMe, setRememberMe, username, setUsername, password, setPassword } = useHook();
+  const {
+    rememberMe,
+    setRememberMe,
+    username,
+    setUsername,
+    password,
+    setPassword,
+  } = useHook();
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log(rememberMe)
-    
-  // }, [rememberMe]);
-
   const onFinish = (values) => {
     console.log("Success:", values.username);
-    if(rememberMe) {
+    if (rememberMe) {
       localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, username);
       localStorage.setItem(LOCALSTORAGE_KEY_PASSWORD, password);
-    }
-    else{
-        localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, "");
-        localStorage.setItem(LOCALSTORAGE_KEY_PASSWORD, "");
+    } else {
+      localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, "");
+      localStorage.setItem(LOCALSTORAGE_KEY_PASSWORD, "");
     }
   };
   const onFinishFailed = (errorInfo) => {
@@ -68,7 +69,7 @@ function Login() {
         content: message,
       });
     } else {
-      navigate("/search");
+      navigate(`/search/${username}`);
     }
   };
 
@@ -89,7 +90,7 @@ function Login() {
             initialValues={{
               remember: rememberMe,
               username: savedUsername,
-              password: savedPassword
+              password: savedPassword,
             }}
             layout="vertical"
             onFinish={onFinish}
@@ -137,7 +138,13 @@ function Login() {
                 valuePropName="checked"
                 // nostyle="true"
               >
-                <Checkbox className="Form-Footer-Name" checked={rememberMe} onChange={handleCheckbox}>Remember me</Checkbox>
+                <Checkbox
+                  className="Form-Footer-Name"
+                  checked={rememberMe}
+                  onChange={handleCheckbox}
+                >
+                  Remember me
+                </Checkbox>
               </Form.Item>
               <Form.Item>
                 <MyLinks to="/register" className="Form-Footer-Name-2">

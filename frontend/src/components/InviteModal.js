@@ -1,28 +1,36 @@
 import { useState, useEffect, useRef } from "react";
-import {
-  Button,
-  Input,
-  message,
-  Tag,
-  Form,
-  Modal,
-  DatePicker,
-  Space,
-  TimePicker,
-} from "antd";
+import { useMutation } from "@apollo/client";
+import { Input, Form, Modal, DatePicker, TimePicker } from "antd";
+import { CREATE_INVITATION_MUTATION } from "../graphql/mutations";
 
 const { TextArea } = Input;
 
-const InviteModal = ({ open, onCancel, player, setOpen }) => {
+const InviteModal = ({ open, onCancel, player, setOpen, myPlayerName }) => {
   const [form] = Form.useForm();
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
-  const onReset = () => {
-    form.resetFields();
-  };
+  const [createInvitation] = useMutation(CREATE_INVITATION_MUTATION);
   const getItem = () => form.getFieldsValue(["date", "time", "message"]);
   const format = "HH:mm";
+  const handleInvite = () => {
+    form.submit();
+    if (getItem().date !== undefined && getItem().time) {
+      createInvitation({
+        variables: {
+          input: {
+            sender: myPlayerName,
+            to: player,
+            date: `${getItem().date.$y}/${getItem().date.$M + 1}/${
+              getItem().date.$D
+            }`,
+            time: `${("00" + getItem().time.$H).slice(-2)}:${(
+              "00" + getItem().time.$m
+            ).slice(-2)}`,
+            message: getItem().message === undefined ? "" : getItem().message,
+          },
+        },
+      });
+      setOpen(false);
+    }
+  };
   return (
     <Modal
       open={open}
@@ -30,21 +38,7 @@ const InviteModal = ({ open, onCancel, player, setOpen }) => {
       okText="Invite"
       cancelText="Cancel"
       onCancel={onCancel}
-      onOk={() => {
-        form.submit();
-        if (getItem().date !== undefined && getItem().time) {
-          console.log(
-            getItem().date.$M + 1,
-            getItem().date.$D,
-            //   getItem().time.$d.getDate(),
-            //   getItem().time.$d.getDate(),
-            getItem().time.$H,
-            getItem().time.$m,
-            getItem().message
-          );
-          setOpen(false);
-        }
-      }}
+      onOk={handleInvite}
     >
       <div
         style={{
@@ -70,7 +64,7 @@ const InviteModal = ({ open, onCancel, player, setOpen }) => {
             },
           ]}
         >
-          <DatePicker onChange={onChange} />
+          <DatePicker />
         </Form.Item>
         <Form.Item
           label="Time"

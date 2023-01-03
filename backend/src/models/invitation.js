@@ -15,4 +15,6 @@ const invitationSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("invitation", invitationSchema);
+const invitationModel = mongoose.model("invitation", invitationSchema);
+
+export default invitationModel;

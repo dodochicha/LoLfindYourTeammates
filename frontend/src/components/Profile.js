@@ -3,13 +3,7 @@ import {
   CREATE_PLAYER_MUTATION,
   UPDATE_PLAYER_MUTATION,
 } from "../graphql/mutations";
-import {
-  Link,
-  useMatch,
-  useResolvedPath,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
 import { Form, Input, Select, Button, Layout, Space, Modal } from "antd";
@@ -20,7 +14,7 @@ import axios from "../api";
 import { useHook } from "../hooks/useHook";
 
 function Profile() {
-  const { username, password } = useHook();
+  const { username } = useParams();
   const [id, setID] = useState("");
   const [name, setName] = useState("");
   const [lanes, setLanes] = useState([]);
@@ -71,13 +65,13 @@ function Profile() {
 
   const handleProfile = async (playerId) => {
     const {
-      data: {message, status},
+      data: { message, status },
     } = await axios.post("/updateProfile", {
       username,
       playerId,
-    })
+    });
     console.log(message, status);
-  }
+  };
 
   useEffect(() => {
     console.log("use effect........");
@@ -85,12 +79,12 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    console.log(id, name, lanes, heros, rank)
+    console.log(id, name, lanes, heros, rank, username);
     form.setFieldsValue({
       PlayerID: name,
       SelectLanes: lanes,
       SelectChamps: heros,
-      SelectRank: rank
+      SelectRank: rank,
     });
   }, [id, name, lanes, heros, rank]);
 
@@ -108,9 +102,10 @@ function Profile() {
       values.PlayerID,
       values.SelectLanes,
       values.SelectChamps,
-      values.SelectRank);
-    
-    console.log(formExist)
+      values.SelectRank
+    );
+
+    console.log(formExist);
     if (!formExist) {
       var playerId = uuidv4();
       createPlayer({
@@ -139,7 +134,7 @@ function Profile() {
       });
       handleProfile(id);
     }
-    navigate("/search");
+    navigate(`/search/${username}`);
   };
   const onReset = () => {
     form.resetFields();
@@ -150,7 +145,7 @@ function Profile() {
   };
 
   const handleToSearch = () => {
-    navigate("/search");
+    navigate(`/search/${username}`);
   };
 
   return (
@@ -182,7 +177,7 @@ function Profile() {
             name="myProfile"
             onFinish={onFinish}
             initialValues={{
-              PlayerID: name
+              PlayerID: name,
             }}
             scrollToFirstError
           >
@@ -219,7 +214,7 @@ function Profile() {
               >
                 <Option value="Top">Top</Option>
                 <Option value="Jungle">Jungle</Option>
-                <Option value="Mid">Middle</Option>
+                <Option value="Middle">Middle</Option>
                 <Option value="Bottom">Bottom</Option>
                 <Option value="Support">Support</Option>
               </Select>

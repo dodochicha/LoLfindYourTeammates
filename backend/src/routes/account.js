@@ -42,11 +42,10 @@ router.post("/newUser", async (req, res) => {
       } else {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        // console.log(hashedPassword)
         const newUser = new User({
           username: req.body.username,
           password: hashedPassword,
-          player: null
+          player: null,
         });
         newUser.save();
         return res.json({
@@ -96,7 +95,7 @@ router.get("/userLogin", async (req, res) => {
 router.get("/getProfile", async (req, res) => {
   try {
     let user = await User.findOne({ username: req.query.username });
-    if(user.player !== null) {
+    if (user.player !== null) {
       let player = await Player.findById(user.player.toString());
       return res.json({
         message: "The form has been filled.",
@@ -107,15 +106,13 @@ router.get("/getProfile", async (req, res) => {
         heros: player.heros,
         rank: player.rank,
       });
-    }
-    else{
+    } else {
       return res.json({
         message: "The form has never been filled.",
         status: "NotFilledYet",
       });
     }
   } catch (event) {
-    console.log(event)
     res.json({ message: "getProfile failed", status: "Error" });
     throw new Error("getProfile failed");
   }
@@ -124,7 +121,7 @@ router.get("/getProfile", async (req, res) => {
 router.post("/updateProfile", async (req, res) => {
   try {
     let user = await User.findOne({ username: req.body.username });
-    let player= await Player.findOne({ id: req.body.playerId });
+    let player = await Player.findOne({ id: req.body.playerId });
     if (!player) {
       return res.json({
         message: "The player doesn't exist.",

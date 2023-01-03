@@ -1,5 +1,6 @@
 import playerModel from "./models/player.js";
 import invitationModel from "./models/invitation.js";
+import userModel from "./models/user.js";
 
 const example = [
   {
@@ -55,6 +56,7 @@ const dataInit = async () => {
   await invitationModel.insertMany(example);
   await playerModel.deleteMany({});
   await playerModel.insertMany(example2);
+  await userModel.deleteMany({});
   console.log("Database initialized!");
 };
 
