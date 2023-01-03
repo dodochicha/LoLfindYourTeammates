@@ -116,7 +116,7 @@ function Login() {
             </Form.Item>
             <Form.Item
               className="Footer-Form-Frame"
-            />
+            >
                 {/* <Space direction="horizontal" size={100}> */}
                 <Form.Item
                   // style={{ display: "inline" padding-bottom: 2%;}}
@@ -130,7 +130,7 @@ function Login() {
                   <MyLinks to="/register" className="Form-Footer-Name-2">
                     Don't have an account? Create account here!
                   </MyLinks>
-              </Form.Item>
+                </Form.Item>
             </Form.Item>
             <Form.Item
               className="Button"

@@ -15,7 +15,7 @@ function Player () {
                         {/*TODO: change to user's profile name*/}
                         <h1 className="Player-Profile-Name">Beatrice</h1>
                         {/*TODO: change to user's profile hero type*/}
-                        <img className="Player-Profile-Type" src={require("../images/mid.PNG")}></img>
+                        <img className="Player-Profile-Type" src={require("../images/mid.png")}></img>
                     </div>
                     {/*TODO: change to user's bio*/}
                     <p className="Player-Profile-Bio">Hello there! I am a new master, great in wars!</p>

@@ -1,14 +1,16 @@
-.ProfilePage {
-    box-sizing: border-box;
-    background-color: #13181B;
+.Profile-Image-Background {
+    background: url("../images/wallpaper4.jpg");
+    background-size: cover;
+    /* height: 100%; */
     margin: 0;
     padding: 0;
-    display: flex;
+
     justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-    font-family: 'Montserrat', sans-serif;
+    align-items: center;
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .Prof-Text {
