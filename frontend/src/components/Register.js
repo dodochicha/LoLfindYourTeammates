@@ -28,14 +28,14 @@ function Register() {
 
   const handleNewUser = async () => {
     const {
-      data: { message, status, account_type },
+      data: { message, status },
     } = await axios.post('/newUser', {
       username,
       password,
       password2,
     });
 
-    console.log(message, status, account_type)
+    console.log(message, status)
     if(status === "Error"){
       Modal.error({
         title: 'This is an error message!',

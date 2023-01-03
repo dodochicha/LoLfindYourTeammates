@@ -63,7 +63,7 @@ const Mutation = {
       {
         $set: {
           name: input.name,
-          lanes: input.lane,
+          lanes: input.lanes,
           heros: input.heros,
           rank: input.rank,
         },
@@ -72,9 +72,9 @@ const Mutation = {
     const newPlayer = {
       id: input.id ?? item.id,
       name: input.name ?? player.name,
-      lanes: input.lane ?? player.lane,
-      heros: input.heros ?? player.lane,
-      rank: input.rank ?? player.lane,
+      lanes: input.lanes ?? player.lanes,
+      heros: input.heros ?? player.lanes,
+      rank: input.rank ?? player.lanes,
     };
     pubSub.publish("PLAYER_UPDATED", {
       playerUpdated: newPlayer,

@@ -56,8 +56,8 @@ function Login() {
       data: { message, status },
     } = await axios.get("/userLogin", {
       params: {
-        username,
-        password,
+        username: savedUsername || username,
+        password: savedPassword || password,
       },
     });
 
