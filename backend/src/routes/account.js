@@ -46,6 +46,7 @@ router.post("/newUser", async (req, res) => {
         const newUser = new User({
           username: req.body.username,
           password: hashedPassword,
+          player: null
         });
         newUser.save();
         return res.json({
@@ -95,12 +96,7 @@ router.get("/userLogin", async (req, res) => {
 router.get("/getProfile", async (req, res) => {
   try {
     let user = await User.findOne({ username: req.query.username });
-    if (user.player === undefined) {
-      return res.json({
-        message: "The form has never been filled.",
-        status: "NotFilledYet",
-      });
-    } else {
+    if(user.player !== null) {
       let player = await Player.findById(user.player.toString());
       return res.json({
         message: "The form has been filled.",
@@ -112,7 +108,14 @@ router.get("/getProfile", async (req, res) => {
         rank: player.rank,
       });
     }
+    else{
+      return res.json({
+        message: "The form has never been filled.",
+        status: "NotFilledYet",
+      });
+    }
   } catch (event) {
+    console.log(event)
     res.json({ message: "getProfile failed", status: "Error" });
     throw new Error("getProfile failed");
   }
