@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_PLAYERS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import React from "react";
 import { Table, Layout, Button, Typography, Input } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
@@ -19,6 +19,8 @@ function Search() {
   const [modalOpen, setModalOpen] = useState(false);
   const [playerInvited, setPlayerInvited] = useState("");
   const { Search } = Input;
+  const { state } = useLocation();
+  console.log(state.username)
   useEffect(() => {
     var newFilter = { ...filter, lane: laneFilter };
     setFilter(newFilter);
@@ -49,7 +51,9 @@ function Search() {
     players = [];
   }
   const handleToProfile = () => {
-    navigate("/profile");
+    navigate("/profile",  { state: {
+      username: state.username
+    }});
   };
   const handleInvite = (e) => {
     setModalOpen(true);

@@ -127,26 +127,11 @@ function Login() {
                   <Checkbox className="Form-Footer-Name">Remember me</Checkbox>
                 </Form.Item>
                 <Form.Item>
-                    <Space direction="vertical">
-                        <Space direction="horizontal" size={100}>
-                        <Form.Item
-                            style={{ display: "inline" }}
-                            name="remember"
-                            valuePropName="checked"
-                        >
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-                        <MyLinks to="/login" className="login-form-have-account">
-                            Forgot Password
-                        </MyLinks>
-                        </Space>
-
-                <MyLinks to="/register" className="Form-Footer-Name-2">
-                  Don't have an account? Create account here!
-                </MyLinks>
-              </Space>
+                  <MyLinks to="/register" className="Form-Footer-Name-2">
+                    Don't have an account? Create account here!
+                  </MyLinks>
+              </Form.Item>
             </Form.Item>
-
             <Form.Item
               className="Button"
             // wrapperCol={{

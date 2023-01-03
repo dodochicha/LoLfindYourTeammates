@@ -62,8 +62,23 @@ router.get("/userLogin", async (req, res) => {
             }
         }
     } catch (event) {
-        res.json({ message: "Database insertion failed", status: "Error" });   
-        throw new Error("Database insertion failed");
+        res.json({ message: "Database query failed", status: "Error" });   
+        throw new Error("Database query failed");
+    }
+});
+
+router.get("/getProfile", async (req, res) => {
+    try {
+        let user = await User.findOne({ username: req.query.username }); 
+        if( !user.player ){
+            return res.json({ message: "The form has never been filled.", status: "NotFilledYet" });
+        }
+        else{
+            return res.json({ message: "The form has been filled.", status: "Filled", id: user.player.id, name: user.player.name, lanes: user.player.lanes, heros: user.player.heros, rank: user.player.rank })
+        }
+    } catch (event) {
+        res.json({ message: "Database query failed", status: "Error" });   
+        throw new Error("Database query failed");
     }
 });
 
