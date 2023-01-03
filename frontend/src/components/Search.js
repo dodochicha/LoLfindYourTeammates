@@ -3,14 +3,17 @@ import { GET_PLAYERS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import React from "react";
-import { Table, Layout, Button, Typography, Input } from "antd";
+import { Table, Layout, Button, Typography, Input, Avatar, Badge } from "antd";
+import { NotificationOutlined } from "@ant-design/icons";
 import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
 import InviteModal from "./InviteModal";
+import InvitationList from "./InvitationList";
 
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
+
 function Search() {
   const [laneFilter, setLaneFilter] = useState([]);
   const [rankFilter, setRankFilter] = useState([]);
@@ -103,6 +106,15 @@ function Search() {
                   background: "rgba(255, 255, 255, 0)",
                 }}
               />
+            </Content>
+            <Content>
+              <Badge count={1}>
+                <Avatar
+                  shape="square"
+                  icon={<NotificationOutlined style={{ fontSize: "20px" }} />}
+                />
+              </Badge>
+              <InvitationList></InvitationList>
             </Content>
             <Sider
               style={{

@@ -52,3 +52,31 @@ export const UPDATE_PLAYER_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_INVITATION_MUTATION = gql`
+  mutation createInvitation($input: CreateInvitationInput!) {
+    createInvitation(input: $input) {
+      sender
+      to
+      date
+      time
+      message
+      read
+      ok
+    }
+  }
+`;
+
+export const UPDATE_INVITATION_MUTATION = gql`
+  mutation updateInvitation($input: UpdateInvitationInput!) {
+    updateInvitation(input: $input) {
+      sender
+      to
+      date
+      time
+      message
+      read
+      ok
+    }
+  }
+`;

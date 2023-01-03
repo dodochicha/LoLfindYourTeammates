@@ -26,3 +26,18 @@ export const GET_PLAYERS_QUERY = gql`
     }
   }
 `;
+
+export const GET_INVITATIONS_QUERY = gql`
+  query invitations {
+    invitations {
+      _id
+      sender
+      to
+      date
+      time
+      message
+      read
+      ok
+    }
+  }
+`;

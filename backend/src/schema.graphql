@@ -30,6 +30,17 @@ type Player {
   rank: String!
 }
 
+type Invitation {
+  _id: ID!
+  sender: String!
+  to: String!
+  date: String!
+  time: String!
+  message: String
+  read: Boolean!
+  ok: Boolean
+}
+
 input Filter {
   name: String
   lanes: [String]
@@ -39,6 +50,7 @@ input Filter {
 type Query {
   items: [Item!]!
   players(filter: Filter!): [Player!]!
+  invitations: [Invitation!]!
 }
 
 input CreateItemInput {
@@ -52,11 +64,6 @@ input CreateItemInput {
 
 input UpdateItemInput {
   id: ID!
-  name: String
-  amount: Int
-  category: String
-  date: Date
-  description: String
 }
 
 input CreatePlayerInput {
@@ -75,6 +82,19 @@ input UpdatePlayerInput {
   rank: String!
 }
 
+input CreateInvitationInput {
+  sender: String!
+  to: String!
+  date: String!
+  time: String!
+  message: String
+}
+
+input UpdateInvitationInput {
+  _id: ID!
+  ok: Boolean
+}
+
 type Mutation {
   createItem(input: CreateItemInput!): Item
   updateItem(input: UpdateItemInput!): Item
@@ -83,6 +103,8 @@ type Mutation {
   # TODO 5.1 End
   createPlayer(input: CreatePlayerInput!): Player
   updatePlayer(input: UpdatePlayerInput!): Player
+  createInvitation(input: CreateInvitationInput!): Invitation
+  updateInvitation(input: UpdateInvitationInput!): Invitation
 }
 
 type Subscription {
@@ -93,4 +115,6 @@ type Subscription {
   # TODO 6.1 End
   playerCreated: Player!
   playerUpdated: Player!
+  invitationCreated: Invitation!
+  invitationUpdated: Invitation!
 }

@@ -23,6 +23,10 @@ const Query = {
       .sort();
     return players;
   },
+  invitations: async (parent, args, { invitationModel }) => {
+    const invitations = await invitationModel.find().sort();
+    return invitations;
+  },
 };
 
 export default Query;

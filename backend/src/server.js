@@ -13,6 +13,7 @@ import CategoryResolver from "./resolvers/Category.js";
 // db
 import itemModel from "./models/item.js";
 import playerModel from "./models/player.js";
+import invitationModel from "./models/invitation.js";
 const pubSub = createPubSub();
 
 const yoga = createYoga({
@@ -30,6 +31,7 @@ const yoga = createYoga({
     pubSub,
     itemModel,
     playerModel,
+    invitationModel,
   },
   graphiql: {
     subscriptionsProtocol: "WS",

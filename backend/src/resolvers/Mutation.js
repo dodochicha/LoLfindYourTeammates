@@ -81,6 +81,39 @@ const Mutation = {
     });
     return newPlayer;
   },
+  createInvitation: async (parent, { input }, { invitationModel, pubSub }) => {
+    const newInvitation = new invitationModel({ ...input, read: false });
+    await newInvitation.save();
+    pubSub.publish("INVITATION_CREATED", {
+      invitationCreated: newInvitation,
+    });
+    return newInvitation;
+  },
+
+  updateInvitation: async (parent, { input }, { invitationModel, pubSub }) => {
+    const invitation = await invitationModel.findOneAndUpdate(
+      { _id: input._id },
+      {
+        $set: {
+          read: true,
+          ok: input.ok,
+        },
+      }
+    );
+    const newInvitation = {
+      sender: invitation.sender,
+      to: invitation.to,
+      date: invitation.date,
+      time: invitation.time,
+      message: invitation.message,
+      read: true,
+      ok: input.ok,
+    };
+    pubSub.publish("INVITATION_UPDATED", {
+      invitationUpdated: newInvitation,
+    });
+    return newInvitation;
+  },
 };
 
 export default Mutation;

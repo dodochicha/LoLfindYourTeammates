@@ -57,3 +57,33 @@ export const PLAYER_UPDATED_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const INVITATION_CREATED_SUBSCRIPTION = gql`
+  subscription InvitationCreated {
+    invitationCreated {
+      _id
+      sender
+      to
+      date
+      time
+      message
+      read
+      ok
+    }
+  }
+`;
+
+export const INVITATION_UPDATED_SUBSCRIPTION = gql`
+  subscription InvitationUpdated {
+    invitationUpdated {
+      _id
+      sender
+      to
+      date
+      time
+      message
+      read
+      ok
+    }
+  }
+`;
