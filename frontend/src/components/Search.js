@@ -19,7 +19,6 @@ function Search() {
   const [modalOpen, setModalOpen] = useState(false);
   const [playerInvited, setPlayerInvited] = useState("");
   const { Search } = Input;
-  const { state } = useLocation();
   // console.log(state.username)
   useEffect(() => {
     var newFilter = { ...filter, lanes: laneFilter };
@@ -55,7 +54,7 @@ function Search() {
   const handleToProfile = () => {
     navigate("/profile", {
       state: {
-        username: state.username,
+        username: localStorage.getItem("username"),
       },
     });
   };

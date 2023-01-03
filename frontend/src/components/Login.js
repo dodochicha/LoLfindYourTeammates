@@ -12,17 +12,17 @@ import {
 import { Link, useMatch, useResolvedPath, useNavigate } from "react-router-dom";
 import axios from "../api";
 
-const LOCALSTORAGE_KEY = "save-me";
+const LOCALSTORAGE_KEY = "username";
 const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
 
 function Login() {
-  console.log("login...");
+  // console.log("login...");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [form] = Form.useForm();
   const navigate = useNavigate();
   useEffect(() => {
-    localStorage.setItem("save-me", username);
+    localStorage.setItem("username", username);
   }, [username]);
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -37,8 +37,8 @@ function Login() {
 
   const handleUserLogin = async () => {
     const {
-      data: { message, status},
-    } = await axios.get('/userLogin', {
+      data: { message, status },
+    } = await axios.get("/userLogin", {
       params: {
         username,
         password,
@@ -51,11 +51,12 @@ function Login() {
         title: "This is an error message!",
         content: message,
       });
-    }
-    else{
-      navigate("/search", { state: {
-        username: username
-      }});
+    } else {
+      navigate("/search", {
+        state: {
+          username: username,
+        },
+      });
     }
   };
 
@@ -114,30 +115,28 @@ function Login() {
                 onChange={handleChange(setPassword)}
               />
             </Form.Item>
-            <Form.Item
-              className="Footer-Form-Frame"
-            >
-                {/* <Space direction="horizontal" size={100}> */}
-                <Form.Item
-                  // style={{ display: "inline" padding-bottom: 2%;}}
-                  name="remember"
-                  valuePropName="checked"
-                  // nostyle
-                >
-                  <Checkbox className="Form-Footer-Name">Remember me</Checkbox>
-                </Form.Item>
-                <Form.Item>
-                  <MyLinks to="/register" className="Form-Footer-Name-2">
-                    Don't have an account? Create account here!
-                  </MyLinks>
-                </Form.Item>
+            <Form.Item className="Footer-Form-Frame">
+              {/* <Space direction="horizontal" size={100}> */}
+              <Form.Item
+                // style={{ display: "inline" padding-bottom: 2%;}}
+                name="remember"
+                valuePropName="checked"
+                // nostyle
+              >
+                <Checkbox className="Form-Footer-Name">Remember me</Checkbox>
+              </Form.Item>
+              <Form.Item>
+                <MyLinks to="/register" className="Form-Footer-Name-2">
+                  Don't have an account? Create account here!
+                </MyLinks>
+              </Form.Item>
             </Form.Item>
             <Form.Item
               className="Button"
-            // wrapperCol={{
-            //   offset: 10,
-            //   span: 20,
-            // }}
+              // wrapperCol={{
+              //   offset: 10,
+              //   span: 20,
+              // }}
             >
               <Button
                 className="Button-Color"
