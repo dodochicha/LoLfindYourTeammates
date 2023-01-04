@@ -108,6 +108,7 @@ router.get("/getProfile", async (req, res) => {
         lanes: player.lanes,
         heros: player.heros,
         rank: player.rank,
+        facebook: player.facebook,
       });
     } else {
       return res.json({
@@ -132,6 +133,7 @@ router.get("/getProfileById", async (req, res) => {
         lanes: player.lanes,
         heros: player.heros,
         rank: player.rank,
+        facebook: player.facebook,
       });
     } 
   } catch (event) {
