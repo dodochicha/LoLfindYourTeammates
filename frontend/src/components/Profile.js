@@ -24,6 +24,7 @@ function Profile() {
   const [rank, setRank] = useState("");
   const [fb, setFb] = useState("");
   const [formExist, setFormExist] = useState(false);
+  const [submit, setSubmit] = useState(true);
   const { displayStatus } = useHook();
   const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
   const [updatePlayer] = useMutation(UPDATE_PLAYER_MUTATION);
@@ -39,6 +40,21 @@ function Profile() {
   } = useQuery(GET_PLAYERS_QUERY, {
     variables: { filter: { name: "", lanes: [], rank: [] } },
   });
+
+  // useEffect(() => {
+  //   subscribeToMore({
+  //     document: ITEM_CREATED_SUBSCRIPTION,
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev;
+  //       const item = subscriptionData.data.itemCreated;
+  //       return {
+  //         items: [item, ...prev.items],
+  //       };
+  //     },
+  //   });
+  // }, [subscribeToMore]);
+
+  const [form] = Form.useForm();
 
   const handleChange = (func) => (event) => {
     func(event.target.value);
@@ -57,6 +73,7 @@ function Profile() {
   };
 
   const handleQuery = async () => {
+    console.log("handleQuery");
     const {
       data: { message, status, id, name, lanes, heros, rank, facebook },
     } = await axios.get("/getProfile", {
@@ -90,6 +107,9 @@ function Profile() {
     console.log("use effect........");
     handleQuery();
   }, []);
+  useEffect(() => {
+    console.log("submit");
+  }, [submit]);
 
   useEffect(() => {
     console.log(id, name, lanes, heros, rank, username, fb);
@@ -102,7 +122,6 @@ function Profile() {
     });
   }, [id, name, lanes, heros, rank, fb]);
 
-  const [form] = Form.useForm();
   const { Option } = Select;
   const onFinish = async (values) => {
     const {
@@ -125,9 +144,9 @@ function Profile() {
     var nameRepeated = playersData.players.filter(
       (player) => player.name === values.PlayerID && player.name !== name
     );
-    console.log(nameRepeated);
+    console.log("nameRepeated:", nameRepeated);
     if (nameRepeated.length === 0) {
-      console.log(formExist);
+      console.log("formExist:", formExist);
       if (!formExist) {
         var playerId = uuidv4();
         createPlayer({
@@ -142,6 +161,8 @@ function Profile() {
             },
           },
         });
+        console.log("playerId:", playerId);
+        setID(playerId);
         handleProfile(playerId);
         displayStatus({
           type: "success",
@@ -160,6 +181,7 @@ function Profile() {
             },
           },
         });
+        console.log("id:", id);
         handleProfile(id);
         displayStatus({
           type: "success",
@@ -172,6 +194,7 @@ function Profile() {
         msg: "The name has already been used.",
       });
     }
+    setFormExist(true);
     // navigate(`/search`);
     // window.location.reload();
   };

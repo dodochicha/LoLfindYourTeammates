@@ -1,32 +1,25 @@
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_INVITATIONS_QUERY } from "../graphql/queries";
+import { GET_INVITATIONS_QUERY, GET_PLAYERS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React from "react";
-import { Table, Layout, Button, Typography, Input, Avatar, Badge } from "antd";
+import { Table } from "antd";
 import {
   CheckOutlined,
   CloseOutlined,
   CheckCircleTwoTone,
   CloseCircleTwoTone,
 } from "@ant-design/icons";
-import { RedoOutlined } from "@ant-design/icons";
-import { columns } from "../utils/columns";
-import Filter from "./Filter";
-import InviteModal from "./InviteModal";
 import { UPDATE_INVITATION_MUTATION } from "../graphql/mutations";
 
-const { Title } = Typography;
-const { Header, Content, Sider, Footer } = Layout;
-
-function InvitationList({ myPlayerName, setInvitationReadNum }) {
+function InvitationList({
+  myPlayerName,
+  setInvitationReadNum,
+  playersData,
+  invitationsData,
+}) {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const {
-    loading,
-    error,
-    data: invitationsData,
-    subscribeToMore,
-  } = useQuery(GET_INVITATIONS_QUERY);
   const [updateInvitation] = useMutation(UPDATE_INVITATION_MUTATION);
   if (invitationsData !== undefined) {
     var invitations = invitationsData.invitations.map((invitation) => ({
@@ -36,7 +29,6 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
   } else {
     var invitations = [];
   }
-  // console.log(invitations);
   const result = invitations.filter(
     (invitation) => invitation.to === myPlayerName
   );
@@ -94,12 +86,23 @@ function InvitationList({ myPlayerName, setInvitationReadNum }) {
       else return "gray";
     }
   };
+  const handleToPlayer = (record) => {
+    var result = playersData.players.filter(
+      (player) => player.name === record.sender
+    );
+    navigate(`/player/` + result[0].id);
+  };
   const columns = [
     {
       title: "Sender",
       dataIndex: "sender",
       render: (text, record) => (
-        <a style={{ color: fontColor(record) }}>{text}</a>
+        <a
+          style={{ color: fontColor(record) }}
+          onClick={() => handleToPlayer(record)}
+        >
+          {text}
+        </a>
       ),
     },
     {

@@ -8,6 +8,7 @@ export const PLAYER_CREATED_SUBSCRIPTION = gql`
       lanes
       heros
       rank
+      facebook
     }
   }
 `;
@@ -20,6 +21,7 @@ export const PLAYER_UPDATED_SUBSCRIPTION = gql`
       lanes
       heros
       rank
+      facebook
     }
   }
 `;

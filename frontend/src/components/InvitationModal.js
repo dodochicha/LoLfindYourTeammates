@@ -7,6 +7,8 @@ function InvitationModal({
   setOpen,
   myPlayerName,
   setInvitationReadNum,
+  playersData,
+  invitationsData,
 }) {
   const [form] = Form.useForm();
   return (
@@ -27,6 +29,8 @@ function InvitationModal({
       <InvitationList
         myPlayerName={myPlayerName}
         setInvitationReadNum={setInvitationReadNum}
+        playersData={playersData}
+        invitationsData={invitationsData}
       />
       <ReplyList myPlayerName={myPlayerName} />
     </Modal>

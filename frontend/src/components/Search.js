@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
 import { GET_PLAYERS_QUERY, GET_INVITATIONS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React from "react";
-import { Table, Layout, Button, Typography, Input, Avatar, Badge, Tooltip } from "antd";
+import { Table, Button, Input, Avatar, Badge, Tooltip } from "antd";
 import {
   RedoOutlined,
   UserOutlined,
@@ -15,12 +15,8 @@ import Filter from "./Filter";
 import InviteModal from "./InviteModal";
 import InvitationModal from "./InvitationModal";
 import axios from "../api";
-import { useHook } from "../hooks/useHook";
 
 import "../styles/Search.css";
-
-const { Title } = Typography;
-const { Header, Content, Sider, Footer } = Layout;
 
 function Search() {
   const username = localStorage.getItem("username");
@@ -151,9 +147,7 @@ function Search() {
                 <Avatar
                   shape="circle"
                   icon={
-                    <NotificationOutlined
-                      onClick={handleInvitationModalOpen}
-                    />
+                    <NotificationOutlined onClick={handleInvitationModalOpen} />
                   }
                   className="Search-Bar-Avatar"
                 />
@@ -197,20 +191,13 @@ function Search() {
         setOpen={setModalOpen}
         myPlayerName={myPlayerName}
       />
-      <InviteModal
-        open={modalOpen}
-        player={playerInvited}
-        onCancel={() => {
-          setModalOpen(false);
-        }}
-        setOpen={setModalOpen}
-        myPlayerName={myPlayerName}
-      />
       <InvitationModal
         open={invitationModalOpen}
         setOpen={setInvitationModalOpen}
         myPlayerName={myPlayerName}
         setInvitationReadNum={setInvitationReadNum}
+        playersData={playersData}
+        invitationsData={invitationsData}
       />
       <div className="Search-Content">
         <div className="Search-Content-Left">
