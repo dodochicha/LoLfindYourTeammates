@@ -39,9 +39,19 @@
 .ant-input {
     background-color: #2B2D35;
     color: #FFFFFF;
+    border: none;
     /* border-radius: 20px; */
 }
 
-.ant-input:hover, .ant-input:focus-within, .ant-input:focus {
-    border: 2px solid #8B00FF !important; 
+.ant-input input:hover {
+    border: none !important;
 }
+
+/* .ant-input:hover, .ant-input:focus {
+    border: 2px solid #8B00FF !important; 
+} */
+
+/* .ant-input input:hover {
+    border: none !important;
+} */
+

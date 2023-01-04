@@ -89,6 +89,10 @@
   color: #ffffff;
 }
 
+.Profile-Form-Box:focus {
+  border: 2px solid #8b00ff !important;
+}
+
 .Prof-Text {
   margin-top: 0;
   display: flex;
@@ -140,7 +144,7 @@
     font-size: 100%;
     color: #FFFFFF;
     text-align: center; */
-
+  /* background: #2B2D35; */
   background: #8b00ff;
   border: none;
   margin-left: 45%;

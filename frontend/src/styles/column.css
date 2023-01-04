@@ -12,4 +12,15 @@
     font-style: normal;
     font-weight: 700;
     font-size: 11px;
+
+    color: #2B2D35;
+}
+
+.Column-Invite:hover {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+
+    color:#8B00FF;
 }
