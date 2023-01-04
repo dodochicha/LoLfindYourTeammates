@@ -5,7 +5,7 @@ const columns = (handelInvite, myPlayerName) => [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a>{text}</a>,
+    render: (text, record) => <a>{text}</a>,
   },
   {
     title: "Rank",

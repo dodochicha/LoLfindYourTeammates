@@ -6,14 +6,13 @@ import {
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
-import { Form, Input, Select, Button, Layout, Space, Modal } from "antd";
+import { Form, Input, Select, Button, Layout, Space, Tag } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import heroes_eng from "../utils/heros_eng";
 import heroes from "../utils/heros";
 import "../styles/Profile.css";
 import axios from "../api";
 import { useHook } from "../hooks/useHook";
-
 
 function Profile() {
   const username = localStorage.getItem("username");
@@ -159,6 +158,26 @@ function Profile() {
     navigate(`/search`);
     window.location.reload();
   };
+  const tagRender = (props) => {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return (
+      <Tag
+        color="purple"
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{
+          marginRight: 3,
+        }}
+      >
+        {label}
+      </Tag>
+    );
+  };
 
   return (
     <div className="Profile-Image-Background">
@@ -170,7 +189,10 @@ function Profile() {
             style={{ paddingBottom: "5%" }}
           > */}
           <div className="Profile-Form-Header">
-            <Header className="Profile-Form-Header-Text"> {username}'s Profile </Header>
+            <Header className="Profile-Form-Header-Text">
+              {" "}
+              {username}'s Profile{" "}
+            </Header>
             <div className="Profile-Form-Header-Button-Frame">
               <Button
                 type="primary"
@@ -200,7 +222,7 @@ function Profile() {
             <Form.Item
               className="Profile-Form-Frame"
               name="PlayerID"
-              label = {<h2 className="Form-Name">Player ID 名字</h2>}
+              label={<h2 className="Form-Name">Player ID 名字</h2>}
               // label="Player ID 名字"
               rules={[
                 {
@@ -210,15 +232,15 @@ function Profile() {
               ]}
               tooltip="Your in-game name."
             >
-              <Input 
+              <Input
                 // className= "Profile-Form-Box"
-                onChange={handleChange(setName)} 
-                defaultValue={name} 
+                onChange={handleChange(setName)}
+                defaultValue={name}
               />
             </Form.Item>
             <Form.Item
               name="SelectLanes"
-              label = {<h2 className="Form-Name">Main Roles 擅長路線</h2>}
+              label={<h2 className="Form-Name">Main Roles 擅長路線</h2>}
               // label="Main Roles 擅長路線"
               rules={[
                 {
@@ -231,6 +253,7 @@ function Profile() {
             >
               <Select
                 // className= "Profile-Form-Box"
+                tagRender={tagRender}
                 mode="multiple"
                 onChange={onLaneChange}
                 placeholder="Please select your main roles!"
@@ -245,7 +268,7 @@ function Profile() {
             </Form.Item>
             <Form.Item
               name="SelectChamps"
-              label = {<h2 className="Form-Name">Main Champions 擅長英雄</h2>}
+              label={<h2 className="Form-Name">Main Champions 擅長英雄</h2>}
               // label="Main Champions 擅長英雄"
               rules={[
                 {
@@ -258,6 +281,7 @@ function Profile() {
             >
               <Select
                 // className= "Profile-Form-Box"
+                tagRender={tagRender}
                 mode="multiple"
                 onChange={onHerosChange}
                 placeholder="Please select your main champions!"
@@ -270,7 +294,7 @@ function Profile() {
             </Form.Item>
             <Form.Item
               name="SelectRank"
-              label = {<h2 className="Form-Name">Rank</h2>}
+              label={<h2 className="Form-Name">Rank</h2>}
               // label="Rank"
               rules={[{ required: true, message: "Please select your rank!" }]}
               tooltip="Your rank."
@@ -299,10 +323,20 @@ function Profile() {
               //   span: ,
               // }}
             >
-              <Button type="primary" htmlType="submit" size="large" className="Profile-Button-Color-1">
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                className="Profile-Button-Color-1"
+              >
                 Submit
               </Button>
-              <Button htmlType="button" size="large" onClick={onReset} className="Profile-Button-Color-2">
+              <Button
+                htmlType="button"
+                size="large"
+                onClick={onReset}
+                className="Profile-Button-Color-2"
+              >
                 Reset
               </Button>
             </Form.Item>

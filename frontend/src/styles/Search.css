@@ -23,7 +23,7 @@
 
 .Search-Header-Center {
   width: 70%;
-  
+
   display: flex;
   flex-direction: row;
 }
@@ -103,11 +103,11 @@
 }
 
 .Search-Content-Right-Header-Text {
-  font-family: 'DM Sans';
+  font-family: "DM Sans";
   font-style: normal;
   font-weight: 400;
   font-size: 100%;
-  color: #FFFFFF;
+  color: #ffffff;
 
   padding-left: 5%;
 }
@@ -117,7 +117,6 @@
   width: 100%;
   bottom: 0;
 }
-
 
 .filterDetail {
   position: absolute;

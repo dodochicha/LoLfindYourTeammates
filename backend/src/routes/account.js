@@ -95,6 +95,9 @@ router.get("/userLogin", async (req, res) => {
 router.get("/getProfile", async (req, res) => {
   try {
     let user = await User.findOne({ username: req.query.username });
+    // console.log("user:", user);
+    // console.log("req.query.username:", req.query.username);
+    if (user === null) return;
     if (user.player !== null) {
       let player = await Player.findById(user.player.toString());
       return res.json({
