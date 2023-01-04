@@ -62,7 +62,7 @@ function Player() {
           {/*TODO: change to user's profile image*/}
           <img
             className="Player-Profile-Picture"
-            src={require("../images/facebook.png")}
+            src={require("../images/face.png")}
           />
         </div>
         <div className="Player-Profile-Bio-Frame">
