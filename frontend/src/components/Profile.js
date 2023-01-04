@@ -322,7 +322,7 @@ function Profile() {
             </Form.Item>
             <Form.Item
               name="SelectRank"
-              label={<h2 className="Form-Name">Rank</h2>}
+              label={<h2 className="Form-Name">Rank 排位</h2>}
               // label="Rank"
               rules={[{ required: true, message: "Please select your rank!" }]}
               tooltip="Your rank."
@@ -343,6 +343,18 @@ function Profile() {
                 <Option value="宗師">Grandmaster 宗師</Option>
                 <Option value="菁英">Challenger 菁英</Option>
               </Select>
+            </Form.Item>
+            <Form.Item
+              className="Profile-Form-Frame"
+              name="PlayerFB"
+              label={<h2 className="Form-Name">FB帳號</h2>}
+              tooltip="Your Facebook ID."
+            >
+              <Input
+                // className= "Profile-Form-Box"
+                // onChange={handleChange(setName)}
+                // defaultValue={name}
+              />
             </Form.Item>
             <Form.Item
               className="Profile-Footer-Frame"
