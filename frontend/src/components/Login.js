@@ -31,7 +31,7 @@ function Login({ onLogin }) {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
-    localStorage.setItem("username", username);
+    localStorage.setItem("username", values.username);
     console.log("Success:", values.username);
     if (rememberMe) {
       localStorage.setItem(LOCALSTORAGE_KEY_USERNAME, username);
