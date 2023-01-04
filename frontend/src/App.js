@@ -25,7 +25,7 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/search2" element={<Search2 />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/player" element={<Player />} />
+            <Route path="/player/:id" element={<Player />} />
             <Route path="*" element={<h1>Error, Page Not Found</h1>} />
           </Routes>
         </BrowserRouter>

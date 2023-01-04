@@ -118,6 +118,27 @@ router.get("/getProfile", async (req, res) => {
   }
 });
 
+
+router.get("/getProfileById", async (req, res) => {
+  try {
+    console.log("TEST:", req.query.id)
+    let player = await Player.findOne({ id: req.query.id });
+    if (player !== null) {
+      console.log("hello")
+      return res.json({
+        id: player.id,
+        name: player.name,
+        lanes: player.lanes,
+        heros: player.heros,
+        rank: player.rank,
+      });
+    } 
+  } catch (event) {
+    res.json({ message: "getProfile failed", status: "Error" });
+    throw new Error("getProfile failed");
+  }
+});
+
 router.post("/updateProfile", async (req, res) => {
   try {
     let user = await User.findOne({ username: req.body.username });

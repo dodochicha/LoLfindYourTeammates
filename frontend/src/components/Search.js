@@ -100,12 +100,18 @@ function Search() {
     players = [];
   }
 
+  console.log("PLAYERS: ", players)
+
   const handleToProfile = () => {
     navigate(`/profile`);
   };
   const handleToLogOut = () => {
     navigate(`/`);
   };
+  const handleToPlayer = (id) => {
+    console.log("AT PLAYER NAVIGATION, ID IS: ", id);
+    navigate(`/player/`+id)
+  }
   const handleInvite = (e) => {
     setModalOpen(true);
     setPlayerInvited(e.target.innerText.slice(7));
@@ -223,7 +229,7 @@ function Search() {
             </div>
             <div className="Search-Content-Right-Table">
               <Table
-                columns={columns(handleInvite)}
+                columns={columns(handleToPlayer, handleInvite, myPlayerName)}
                 dataSource={players}
                 className="table"
               />
