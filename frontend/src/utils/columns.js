@@ -1,11 +1,14 @@
 import { Space, Table, Tag } from "antd";
+import viewPlayer from "../components/Search";
 
-const columns = (handelInvite, myPlayerName) => [
+const columns = (handleToPlayer, handelInvite, myPlayerName) => [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text, record) => <a>{text}</a>,
+    render: (_, { id, name }) => (
+      <a onClick={() => handleToPlayer(id)}>{name}</a>
+    ),
   },
   {
     title: "Rank",

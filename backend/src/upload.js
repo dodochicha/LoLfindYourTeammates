@@ -46,7 +46,7 @@ const example2 = [
     id: "5",
     name: "T1 Keria",
     lanes: ["Support"],
-    heros: ["拉克斯", "卡瑪"],
+    heros: ["拉克絲", "卡瑪"],
     rank: "菁英",
   },
 ];
