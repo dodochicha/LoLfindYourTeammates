@@ -287,7 +287,6 @@ function Profile() {
                 tagRender={tagRender}
                 mode="multiple"
                 onChange={onLaneChange}
-                placeholder="Please select your main roles!"
                 defaultValue={lanes}
               >
                 <Option value="Top">Top</Option>
@@ -315,7 +314,6 @@ function Profile() {
                 tagRender={tagRender}
                 mode="multiple"
                 onChange={onHerosChange}
-                placeholder="Please select your main champions!"
                 defaultValue={heros}
               >
                 {heroes.map((hero, index) => (
