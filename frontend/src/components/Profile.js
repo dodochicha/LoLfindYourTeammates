@@ -22,6 +22,7 @@ function Profile() {
   const [lanes, setLanes] = useState([]);
   const [heros, setHeros] = useState([]);
   const [rank, setRank] = useState("");
+  const [fb, setFb] = useState("");
   const [formExist, setFormExist] = useState(false);
   const { displayStatus } = useHook();
   const [createPlayer] = useMutation(CREATE_PLAYER_MUTATION);
@@ -57,7 +58,7 @@ function Profile() {
 
   const handleQuery = async () => {
     const {
-      data: { message, status, id, name, lanes, heros, rank },
+      data: { message, status, id, name, lanes, heros, rank, facebook },
     } = await axios.get("/getProfile", {
       params: {
         username,
@@ -71,6 +72,7 @@ function Profile() {
       setLanes(lanes);
       setHeros(heros);
       setRank(rank);
+      setFb(facebook)
     }
   };
 
@@ -90,14 +92,15 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    console.log(id, name, lanes, heros, rank, username);
+    console.log(id, name, lanes, heros, rank, username, fb);
     form.setFieldsValue({
       PlayerID: name,
       SelectLanes: lanes,
       SelectChamps: heros,
       SelectRank: rank,
+      PlayerFB: fb
     });
-  }, [id, name, lanes, heros, rank]);
+  }, [id, name, lanes, heros, rank, fb]);
 
   const [form] = Form.useForm();
   const { Option } = Select;
@@ -114,13 +117,8 @@ function Profile() {
       values.PlayerID,
       values.SelectLanes,
       values.SelectChamps,
-      values.SelectRank
-    );
-    console.log(
-      values.PlayerID,
-      values.SelectLanes,
-      values.SelectChamps,
-      values.SelectRank
+      values.SelectRank,
+      values.PlayerFB
     );
 
     console.log(playersData);
@@ -140,6 +138,7 @@ function Profile() {
               lanes: values.SelectLanes,
               heros: values.SelectChamps,
               rank: values.SelectRank,
+              facebook: values.PlayerFB
             },
           },
         });
@@ -157,6 +156,7 @@ function Profile() {
               lanes: values.SelectLanes,
               heros: values.SelectChamps,
               rank: values.SelectRank,
+              facebook: values.PlayerFB
             },
           },
         });
@@ -181,6 +181,7 @@ function Profile() {
     setLanes([]);
     setHeros([]);
     setRank("");
+    setFb("");
   };
 
   const handleToSearch = () => {
@@ -352,8 +353,8 @@ function Profile() {
             >
               <Input
                 // className= "Profile-Form-Box"
-                // onChange={handleChange(setName)}
-                // defaultValue={name}
+                onChange={handleChange(setFb)}
+                defaultValue={fb}
               />
             </Form.Item>
             <Form.Item
