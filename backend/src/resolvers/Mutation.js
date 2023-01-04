@@ -17,6 +17,7 @@ const Mutation = {
           lanes: input.lanes,
           heros: input.heros,
           rank: input.rank,
+          facebook: input.facebook,
         },
       }
     );
@@ -26,6 +27,7 @@ const Mutation = {
       lanes: input.lanes ?? player.lanes,
       heros: input.heros ?? player.lane,
       rank: input.rank ?? player.lane,
+      facebook: input.facebook ?? player.facebook,
     };
     pubSub.publish("PLAYER_UPDATED", {
       playerUpdated: newPlayer,

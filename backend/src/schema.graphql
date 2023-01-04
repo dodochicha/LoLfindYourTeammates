@@ -4,6 +4,7 @@ type Player {
   lanes: [String!]!
   heros: [String!]!
   rank: String!
+  facebook: String
 }
 
 type Invitation {
@@ -34,6 +35,7 @@ input CreatePlayerInput {
   lanes: [String!]!
   heros: [String!]!
   rank: String!
+  facebook: String
 }
 
 input UpdatePlayerInput {
@@ -42,6 +44,7 @@ input UpdatePlayerInput {
   lanes: [String!]!
   heros: [String!]!
   rank: String!
+  facebook: String
 }
 
 input CreateInvitationInput {
