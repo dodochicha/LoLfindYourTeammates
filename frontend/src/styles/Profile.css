@@ -162,3 +162,13 @@
     background: #2B2D35;
     border: none;
 }
+
+.ant-select-selector {
+    background-color: #2B2D35 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.ant-select-arrow{
+    color: white !important;
+}
