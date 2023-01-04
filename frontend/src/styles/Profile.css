@@ -90,6 +90,10 @@
     color: #FFFFFF;
 }
 
+.Profile-Form-Box:hover,  .Profile-Form-Box:focus{
+    border: 2px solid #8B00FF !important; 
+}
+
 
 
 .Prof-Text {
