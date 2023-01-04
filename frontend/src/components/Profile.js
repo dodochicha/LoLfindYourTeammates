@@ -72,7 +72,7 @@ function Profile() {
       setLanes(lanes);
       setHeros(heros);
       setRank(rank);
-      setFb(facebook)
+      setFb(facebook);
     }
   };
 
@@ -98,7 +98,7 @@ function Profile() {
       SelectLanes: lanes,
       SelectChamps: heros,
       SelectRank: rank,
-      PlayerFB: fb
+      PlayerFB: fb,
     });
   }, [id, name, lanes, heros, rank, fb]);
 
@@ -138,7 +138,7 @@ function Profile() {
               lanes: values.SelectLanes,
               heros: values.SelectChamps,
               rank: values.SelectRank,
-              facebook: values.PlayerFB
+              facebook: values.PlayerFB,
             },
           },
         });
@@ -156,7 +156,7 @@ function Profile() {
               lanes: values.SelectLanes,
               heros: values.SelectChamps,
               rank: values.SelectRank,
-              facebook: values.PlayerFB
+              facebook: values.PlayerFB,
             },
           },
         });
