@@ -350,8 +350,8 @@ function Profile() {
             <Form.Item
               className="Profile-Form-Frame"
               name="PlayerFB"
-              label={<h2 className="Form-Name">FB帳號</h2>}
-              tooltip="Your Facebook ID."
+              label={<h2 className="Form-Name">FB網址</h2>}
+              tooltip="Your Facebook URL."
             >
               <Input
                 // className= "Profile-Form-Box"
