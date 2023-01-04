@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import React from "react";
 import { Table, Layout, Button, Typography, Input, Avatar, Badge } from "antd";
-import { RedoOutlined, UserOutlined, NotificationOutlined, LogoutOutlined } from "@ant-design/icons";
+import { NotificationOutlined } from "@ant-design/icons";
+import { RedoOutlined } from "@ant-design/icons";
 import { columns } from "../utils/columns";
 import Filter from "./Filter";
 import InviteModal from "./InviteModal";
@@ -12,12 +13,10 @@ import InvitationModal from "./InvitationModal";
 import axios from "../api";
 import { useHook } from "../hooks/useHook";
 
-import "../styles/Search.css";
-
 const { Title } = Typography;
 const { Header, Content, Sider, Footer } = Layout;
 
-function Search() {
+function Search2() {
   const username = localStorage.getItem("username");
   const [laneFilter, setLaneFilter] = useState([]);
   const [rankFilter, setRankFilter] = useState([]);
@@ -122,68 +121,87 @@ function Search() {
   };
   const onSearch = (value) => setNameFilter(value);
 
-
   return (
-    <div className="Search-Layout">
-      <div className="Search-Header">
-        {/* <div className="Search-Header-Left"></div> */}
-        <div className="Search-Header-Center">
-          <div className="Search-Header-Center-Sider"></div>
-          <div className="Search-Header-Center-Content">
-            <Search
-              className="Search-Bar"
-              size="large"
-              // placeholder="find player..."
-              style={{background:"transparent"}}
-              onSearch={onSearch}
-            />
-            <Badge count={invitationReadNum}>
+    <Layout>
+      <Header
+        style={{
+          height: "80px",
+          background: "rgba(255, 255, 255, 0)",
+        }}
+      >
+        <Layout>
+          <Header
+            style={{
+              height: "30px",
+              background: "rgba(255, 255, 255, 0)",
+            }}
+          ></Header>
+          <Layout>
+            <Sider
+              width={"23.5%"}
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+              }}
+            ></Sider>
+            <Content>
+              <Search
+                size="large"
+                placeholder="find player..."
+                onSearch={onSearch}
+                style={{
+                  width: 400,
+                  background: "rgba(255, 255, 255, 0)",
+                }}
+              />
+            </Content>
+            <Content>
+              <Badge count={invitationReadNum}>
                 <Avatar
                   shape="square"
                   icon={
                     <NotificationOutlined
-                      style={{ fontSize: "25px" }}
+                      style={{ fontSize: "20px" }}
                       onClick={handleInvitationModalOpen}
                     />
                   }
                 />
-            </Badge>
-          </div>
-        </div>
-        <div className="Search-Header-Right">
-          <Button
+              </Badge>
+            </Content>
+            <Sider
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+              }}
+            >
+              <Button
                 type="primary"
                 block
                 htmlType="submit"
-                shape="circle"
                 size="large"
-                icon={<LogoutOutlined />}
-                className="Search-Header-Button1"
+                style={{ background: "#5A3E1E" }}
                 onClick={handleToLogOut}
               >
-          </Button>
-          <Button
-            type="primary"
-            block
-            htmlType="submit"
-            shape="circle"
-            size="large"
-            icon={<UserOutlined />}
-            className="Search-Header-Button2"
-            onClick={handleToProfile}
-          >
-          </Button>
-        </div>
-      </div>
-      <InviteModal
-        open={modalOpen}
-        player={playerInvited}
-        onCancel={() => {
-          setModalOpen(false);
-        }}
-        setOpen={setModalOpen}
-        myPlayerName={myPlayerName}
-      />
+                Log out
+              </Button>
+            </Sider>
+            <Sider
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+              }}
+            >
+              <Button
+                type="primary"
+                block
+                htmlType="submit"
+                size="large"
+                style={{ background: "#5A3E1E" }}
+                onClick={handleToProfile}
+              >
+                Profile
+              </Button>
+            </Sider>
+          </Layout>
+        </Layout>
+      </Header>
       <InviteModal
         open={modalOpen}
         player={playerInvited}
@@ -199,39 +217,71 @@ function Search() {
         myPlayerName={myPlayerName}
         setInvitationReadNum={setInvitationReadNum}
       />
-      <div className="Search-Content">
-        <div className="Search-Content-Left">
+      <Layout
+        style={{
+          minHeight: "100vh",
+        }}
+      >
+        <Sider
+          width={400}
+          style={{
+            background: "rgba(255, 255, 255, 0)",
+          }}
+        >
           <Filter
             laneFilter={laneFilter}
             setLaneFilter={setLaneFilter}
             rankFilter={rankFilter}
             setRankFilter={setRankFilter}
           />
-        </div>
-        <div className="Search-Content-Right">
-            <div className="Search-Content-Right-Header">
+        </Sider>
+        <Content
+          style={{
+            padding: 24,
+            margin: 0,
+            minHeight: 280,
+            background: "rgba(255, 255, 255, 0)",
+            height: "100%",
+          }}
+        >
+          <Layout>
+            <Sider
+              width={45}
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+                height: "32px",
+              }}
+            >
               <Button
-                className="Search-Content-Button"
-                icon={<RedoOutlined style={{color: "white"}}/>}
+                icon={<RedoOutlined />}
                 onClick={() => window.location.reload()}
               />
+            </Sider>
+            <Content
+              style={{
+                background: "rgba(255, 255, 255, 0)",
+                height: "32px",
+              }}
+            >
               <div
-                className="Search-Content-Right-Header-Text"
+                style={{
+                  fontSize: "18px",
+                  height: "32px",
+                }}
               >
-                Last updated:  {ShowTime()}
+                Last updated:{ShowTime()}
               </div>
-            </div>
-            <div className="Search-Content-Right-Table">
-              <Table
-                columns={columns(handleInvite)}
-                dataSource={players}
-                className="table"
-              />
-            </div>
-        </div>
-      </div>
-    </div>
+            </Content>
+          </Layout>
+          <Table
+            columns={columns(handleInvite, myPlayerName)}
+            dataSource={players}
+            className="table"
+          />
+        </Content>
+      </Layout>
+    </Layout>
   );
 }
 
-export default Search;
+export default Search2;

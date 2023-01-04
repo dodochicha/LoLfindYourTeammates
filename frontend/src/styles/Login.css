@@ -25,6 +25,7 @@ html, body {
     display: flex;
     justify-content: center;
     width: 30%;
+    min-width: 500px;
     overflow: hidden;
 }
 
