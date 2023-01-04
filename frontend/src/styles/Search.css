@@ -186,6 +186,7 @@
 
 .ant-pagination {
   margin: 0 !important;
+  padding-top: 10px;
   padding-bottom: 10px;
   background-color: whitesmoke;
   border-radius: 0 0 10px 10px ;
