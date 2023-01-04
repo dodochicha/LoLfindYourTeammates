@@ -1,17 +1,95 @@
 .Profile-Image-Background {
-    background: url("../images/wallpaper4.jpg");
+    background: url("../images/wallpaper5.jpg");
     background-size: cover;
+    background-position: right;
     /* height: 100%; */
     margin: 0;
     padding: 0;
 
+    display: flex;
+    flex-direction: row;
+
     justify-content: center;
     align-items: center;
+
 
     position: absolute;
     height: 100%;
     width: 100%;
 }
+
+.Profile-Form-Container {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    overflow: hidden;
+}
+
+.Profile-Form-Background {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    padding: 12% 10% 8% 10%;
+    /* padding: 12% 23% 8% 23%; */
+    display: flex;
+    flex-direction: column;
+    
+    background: rgba(16, 17, 20, 0.97);
+    border-radius: 20px;
+}
+
+.Profile-Form-Header {
+    width: 100%;
+    height: 30%;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.Profile-Form-Header-Text {
+    width: 90%;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 200%;
+    line-height: 65px;
+    /* text-align: center; */
+
+    color: #FFFFFF;
+}
+
+.Profile-Form-Header-Button-Frame {
+    align-items: center;
+    justify-content: center;
+}
+
+.Profile-Form-Header-Button {
+    background-color: #8B00FF;
+}
+
+.Profile-Forms-Frame {
+    padding-top: 10%;
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+}
+
+.Profile-Form-Box {
+    background: #2B2D35 !important;
+    border: none;
+    /* height: 30px; */
+
+    border-radius: 10px;
+
+    color: #FFFFFF;
+}
+
+
 
 .Prof-Text {
     margin-top: 0;
@@ -42,4 +120,44 @@
     -webkit-border-radius: 15px;
     border-radius: 15px;
     overflow: hidden;
+}
+
+.Profile-Footer-Frame {
+    padding-top: 8%;
+
+    border-radius: 20px;
+
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 100%;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.Profile-Button-Color-1 {
+    /* font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 100%;
+    color: #FFFFFF;
+    text-align: center; */
+
+    background: #8B00FF;
+    border: none;
+    margin-left: 45%;
+    margin-right: 10%;
+}
+
+
+.Profile-Button-Color-2 {
+    /* font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 100%
+    ;
+    color: #FFFFFF;
+    text-align: center; */
+    background: #2B2D35;
+    border: none;
 }

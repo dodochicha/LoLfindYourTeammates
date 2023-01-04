@@ -11,10 +11,12 @@ html, body {
     margin: 0;
     padding: 0;
 
-    display: grid;
-    grid-template-rows: 0fr 1fr 0fr;
+    display: flex;
+    flex-direction: row;
+
     justify-content: center;
     align-items: center;
+
 
     position: absolute;
     height: 100%;
@@ -24,13 +26,15 @@ html, body {
 .Reg-Form-Container {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 30%;
     overflow: hidden;
 }
 
 .Reg-Form-Background {
     margin: 0;
-    /* padding: 16% 26% 12% 26%; */
+    padding: 0;
+    width: 100%;
+    /* padding: 12% 21% 8% 21%; */
     padding: 12% 23% 8% 23%;
     
     background: rgba(16, 17, 20, 0.97);
