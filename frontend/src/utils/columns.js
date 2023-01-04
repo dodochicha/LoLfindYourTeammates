@@ -1,5 +1,6 @@
 import { Space, Table, Tag } from "antd";
 import viewPlayer from "../components/Search";
+import "../styles/column.css"
 
 const columns = (handleToPlayer, handelInvite, myPlayerName) => [
   {
@@ -7,7 +8,7 @@ const columns = (handleToPlayer, handelInvite, myPlayerName) => [
     dataIndex: "name",
     key: "name",
     render: (_, { id, name }) => (
-      <a onClick={() => handleToPlayer(id)}>{name}</a>
+      <a onClick={() => handleToPlayer(id)} className="Column-Name">{name}</a>
     ),
   },
   {
@@ -22,7 +23,7 @@ const columns = (handleToPlayer, handelInvite, myPlayerName) => [
     render: (_, { lanes }) => (
       <>
         {lanes.map((tag) => (
-          <Tag color="blue" key={tag}>
+          <Tag color="purple" key={tag}>
             {tag}
           </Tag>
         ))}
@@ -36,7 +37,7 @@ const columns = (handleToPlayer, handelInvite, myPlayerName) => [
     render: (_, { heros }) => (
       <>
         {heros.map((tag) => (
-          <Tag color="blue" key={tag}>
+          <Tag color="purple" key={tag}>
             {tag}
           </Tag>
         ))}
@@ -48,7 +49,7 @@ const columns = (handleToPlayer, handelInvite, myPlayerName) => [
     key: "action",
     render: (_, record) => (
       <Space size="middle" onClick={handelInvite}>
-        {myPlayerName === record.name ? <></> : <a>Invite {record.name}</a>}
+        {myPlayerName === record.name ? <></> : <a className="Column-Invite">Invite {record.name}</a>}
       </Space>
     ),
   },

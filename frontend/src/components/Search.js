@@ -174,7 +174,7 @@ function Search() {
               onClick={handleToLogOut}
             ></Button>
           </Tooltip>
-          <Tooltip title="Profile">
+          <Tooltip title="My Profile">
             <Button
               type="primary"
               block
