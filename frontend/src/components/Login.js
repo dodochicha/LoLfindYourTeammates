@@ -70,6 +70,7 @@ function Login({ onLogin }) {
         content: message,
       });
     } else {
+      localStorage.setItem("authentication", true);
       navigate(`/search`);
       window.location.reload();
     }

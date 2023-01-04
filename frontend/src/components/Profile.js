@@ -1,8 +1,9 @@
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   CREATE_PLAYER_MUTATION,
   UPDATE_PLAYER_MUTATION,
 } from "../graphql/mutations";
+import { GET_PLAYERS_QUERY } from "../graphql/queries";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
@@ -28,6 +29,15 @@ function Profile() {
 
   const { Header, Content, Sider, Footer } = Layout;
   const navigate = useNavigate();
+
+  const {
+    loading,
+    error,
+    data: playersData,
+    subscribeToMore,
+  } = useQuery(GET_PLAYERS_QUERY, {
+    variables: { filter: { name: "", lanes: [], rank: [] } },
+  });
 
   const handleChange = (func) => (event) => {
     func(event.target.value);
@@ -91,7 +101,14 @@ function Profile() {
 
   const [form] = Form.useForm();
   const { Option } = Select;
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
+    const {
+      data: { name },
+    } = await axios.get("/getProfile", {
+      params: {
+        username,
+      },
+    });
     console.log(
       "Success:",
       values.PlayerID,
@@ -106,41 +123,53 @@ function Profile() {
       values.SelectRank
     );
 
-    console.log(formExist);
-    if (!formExist) {
-      var playerId = uuidv4();
-      createPlayer({
-        variables: {
-          input: {
-            id: playerId,
-            name: values.PlayerID,
-            lanes: values.SelectLanes,
-            heros: values.SelectChamps,
-            rank: values.SelectRank,
+    console.log(playersData);
+    var nameRepeated = playersData.players.filter(
+      (player) => player.name === values.PlayerID && player.name !== name
+    );
+    console.log(nameRepeated);
+    if (nameRepeated.length === 0) {
+      console.log(formExist);
+      if (!formExist) {
+        var playerId = uuidv4();
+        createPlayer({
+          variables: {
+            input: {
+              id: playerId,
+              name: values.PlayerID,
+              lanes: values.SelectLanes,
+              heros: values.SelectChamps,
+              rank: values.SelectRank,
+            },
           },
-        },
-      });
-      handleProfile(playerId);
-      displayStatus({
-        type: "success",
-        msg: "Created successfully.",
-      });
+        });
+        handleProfile(playerId);
+        displayStatus({
+          type: "success",
+          msg: "Created successfully.",
+        });
+      } else {
+        updatePlayer({
+          variables: {
+            input: {
+              id: id,
+              name: values.PlayerID,
+              lanes: values.SelectLanes,
+              heros: values.SelectChamps,
+              rank: values.SelectRank,
+            },
+          },
+        });
+        handleProfile(id);
+        displayStatus({
+          type: "success",
+          msg: "Updated successfully.",
+        });
+      }
     } else {
-      updatePlayer({
-        variables: {
-          input: {
-            id: id,
-            name: values.PlayerID,
-            lanes: values.SelectLanes,
-            heros: values.SelectChamps,
-            rank: values.SelectRank,
-          },
-        },
-      });
-      handleProfile(id);
       displayStatus({
-        type: "success",
-        msg: "Updated successfully.",
+        type: "error",
+        msg: "The name has already been used.",
       });
     }
     // navigate(`/search`);
@@ -200,7 +229,6 @@ function Profile() {
                 htmlType="submit"
                 shape="circle"
                 icon={<SearchOutlined />}
-                // size="large"
                 onClick={handleToSearch}
                 className="Profile-Form-Header-Button"
               >

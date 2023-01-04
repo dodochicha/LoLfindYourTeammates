@@ -111,6 +111,7 @@ function Search() {
     navigate(`/profile`);
   };
   const handleToLogOut = () => {
+    localStorage.setItem("authentication", "");
     navigate(`/`);
   };
   const handleToPlayer = (id) => {

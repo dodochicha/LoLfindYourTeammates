@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import Home from "./components/Home";
@@ -12,6 +18,8 @@ import Register from "./components/Register";
 import Player from "./components/Player";
 import { HookProvider } from "./hooks/useHook.js";
 
+const authentication = localStorage.getItem("authentication");
+
 function App() {
   return (
     <>
@@ -22,9 +30,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/search2" element={<Search2 />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route element={<ProtectedRoute isAllowed={!!authentication} />}>
+              <Route path="/search" element={<Search />} />
+              <Route path="/search2" element={<Search2 />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
             <Route path="/player/:id" element={<Player />} />
             <Route path="*" element={<h1>Error, Page Not Found</h1>} />
           </Routes>
@@ -33,5 +43,11 @@ function App() {
     </>
   );
 }
+const ProtectedRoute = ({ isAllowed, redirectPath = "/", children }) => {
+  if (!isAllowed) {
+    return <Navigate to={redirectPath} replace />;
+  }
 
+  return children ? children : <Outlet />;
+};
 export default App;
