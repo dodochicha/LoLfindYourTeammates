@@ -3,7 +3,7 @@ import { GET_PLAYERS_QUERY, GET_INVITATIONS_QUERY } from "../graphql/queries";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import React from "react";
-import { Table, Layout, Button, Typography, Input, Avatar, Badge } from "antd";
+import { Table, Layout, Button, Typography, Input, Avatar, Badge, Tooltip } from "antd";
 import {
   RedoOutlined,
   UserOutlined,
@@ -105,8 +105,6 @@ function Search() {
     players = [];
   }
 
-  console.log("PLAYERS: ", players);
-
   const handleToProfile = () => {
     navigate(`/profile`);
   };
@@ -115,7 +113,6 @@ function Search() {
     navigate(`/`);
   };
   const handleToPlayer = (id) => {
-    console.log("AT PLAYER NAVIGATION, ID IS: ", id);
     navigate(`/player/` + id);
   };
   const handleInvite = (e) => {
@@ -136,6 +133,7 @@ function Search() {
 
   return (
     <div className="Search-Layout">
+      <div className="Search-Gradient"></div>
       <div className="Search-Header">
         {/* <div className="Search-Header-Left"></div> */}
         <div className="Search-Header-Center">
@@ -149,39 +147,45 @@ function Search() {
               onSearch={onSearch}
             />
             <Badge count={invitationReadNum}>
-              <Avatar
-                shape="square"
-                icon={
-                  <NotificationOutlined
-                    style={{ fontSize: "25px" }}
-                    onClick={handleInvitationModalOpen}
-                  />
-                }
-              />
+              <Tooltip title="Notifications">
+                <Avatar
+                  shape="circle"
+                  icon={
+                    <NotificationOutlined
+                      onClick={handleInvitationModalOpen}
+                    />
+                  }
+                  className="Search-Bar-Avatar"
+                />
+              </Tooltip>
             </Badge>
           </div>
         </div>
         <div className="Search-Header-Right">
-          <Button
-            type="primary"
-            block
-            htmlType="submit"
-            shape="circle"
-            size="large"
-            icon={<LogoutOutlined />}
-            className="Search-Header-Button1"
-            onClick={handleToLogOut}
-          ></Button>
-          <Button
-            type="primary"
-            block
-            htmlType="submit"
-            shape="circle"
-            size="large"
-            icon={<UserOutlined />}
-            className="Search-Header-Button2"
-            onClick={handleToProfile}
-          ></Button>
+          <Tooltip title="Log out">
+            <Button
+              type="primary"
+              block
+              htmlType="submit"
+              shape="circle"
+              size="large"
+              icon={<LogoutOutlined />}
+              className="Search-Header-Button1"
+              onClick={handleToLogOut}
+            ></Button>
+          </Tooltip>
+          <Tooltip title="Profile">
+            <Button
+              type="primary"
+              block
+              htmlType="submit"
+              shape="circle"
+              size="large"
+              icon={<UserOutlined />}
+              className="Search-Header-Button2"
+              onClick={handleToProfile}
+            ></Button>
+          </Tooltip>
         </div>
       </div>
       <InviteModal
@@ -219,11 +223,14 @@ function Search() {
         </div>
         <div className="Search-Content-Right">
           <div className="Search-Content-Right-Header">
-            <Button
-              className="Search-Content-Button"
-              icon={<RedoOutlined style={{ color: "white" }} />}
-              onClick={() => window.location.reload()}
-            />
+            <Tooltip title="Refresh">
+              <Button
+                shape="circle"
+                className="Search-Content-Button"
+                icon={<RedoOutlined style={{ color: "white" }} />}
+                onClick={() => window.location.reload()}
+              />
+            </Tooltip>
             <div className="Search-Content-Right-Header-Text">
               Last updated: {ShowTime()}
             </div>
@@ -242,186 +249,3 @@ function Search() {
 }
 
 export default Search;
-
-// import { useQuery } from "@apollo/client";
-// import { GET_PLAYERS_QUERY } from "../graphql/queries";
-// import { useEffect, useState } from "react";
-// import { useNavigate, useLocation, useParams } from "react-router-dom";
-// import React from "react";
-// import { Table, Layout, Button, Typography, Input } from "antd";
-// import { UserOutlined, RedoOutlined } from "@ant-design/icons";
-// import { columns } from "../utils/columns";
-// import Filter from "./Filter";
-// import InviteModal from "./InviteModal";
-// import { borderRadius } from "@mui/system";
-
-// import "../styles/Search.css";
-// import { requirePropFactory } from "@mui/material";
-
-// const { Title } = Typography;
-// const { Header, Content, Sider, Footer } = Layout;
-
-// function Search() {
-//   const { username } = useParams();
-//   const [laneFilter, setLaneFilter] = useState([]);
-//   const [rankFilter, setRankFilter] = useState([]);
-//   const [filter, setFilter] = useState({ name: "", lanes: [], rank: [] });
-//   const [nameFilter, setNameFilter] = useState("");
-//   const [modalOpen, setModalOpen] = useState(false);
-//   const [invitationModalOpen, setInvitationModalOpen] = useState(false);
-//   const [playerInvited, setPlayerInvited] = useState("");
-//   const [invitationReadNum, setInvitationReadNum] = useState(0);
-//   const [myPlayerName, setMyPlayerName] = useState("");
-//   const { Search } = Input;
-//   const findPlayerName = async () => {
-//     const {
-//       data: { message, status, id, name, lanes, heros, rank },
-//     } = await axios.get("/getProfile", {
-//       params: {
-//         username,
-//       },
-//     });
-//     if (name !== undefined) setMyPlayerName(name);
-//   };
-//   useEffect(() => {
-//     console.log("username:", username);
-//     findPlayerName();
-//   }, []);
-//   useEffect(() => {
-//     console.log(myPlayerName);
-//   }, [myPlayerName]);
-//   useEffect(() => {
-//     var newFilter = { ...filter, lanes: laneFilter };
-//     setFilter(newFilter);
-//   }, [laneFilter]);
-//   useEffect(() => {
-//     var newFilter = { ...filter, rank: rankFilter };
-//     setFilter(newFilter);
-//   }, [rankFilter]);
-//   useEffect(() => {
-//     var newFilter = { ...filter, name: nameFilter };
-//     setFilter(newFilter);
-//   }, [nameFilter]);
-//   // useEffect(() => console.log(filter), [filter]);
-//   const {
-//     loading,
-//     error,
-//     data: playersData,
-//     subscribeToMore,
-//   } = useQuery(GET_PLAYERS_QUERY, {
-//     variables: { filter: filter },
-//   });
-//   const navigate = useNavigate();
-//   // useEffect(() => console.log(players), [players]);
-//   if (playersData !== undefined) {
-//     var players = playersData.players.map((player) => ({
-//       ...player,
-//       key: player.id,
-//     }));
-//   } else {
-//     players = [];
-//   }
-//   const handleToProfile = () => {
-//     navigate(`/profile/${username}`, {
-//       state: {
-//         username,
-//       },
-//     });
-//   };
-//   const handleInvite = (e) => {
-//     setModalOpen(true);
-//     setPlayerInvited(e.target.innerText.slice(7));
-//   };
-//   const handleInvitationModalOpen = () => {
-//     setInvitationModalOpen(true);
-//   };
-//   const ShowTime = () => {
-//     var NowDate = new Date();
-//     var h = ("00" + NowDate.getHours()).slice(-2);
-//     var m = ("00" + NowDate.getMinutes()).slice(-2);
-//     var s = ("00" + NowDate.getSeconds()).slice(-2);
-//     return `${h}:${m}:${s}`;
-//   };
-//   const onSearch = (value) => setNameFilter(value);
-
-//   return (
-//     <div className="Search-Layout">
-//       <div className="Search-Header">
-//         {/* <div className="Search-Header-Left"></div> */}
-//         <div className="Search-Header-Center">
-//           <div className="Search-Header-Center-Sider"></div>
-//           <div className="Search-Header-Center-Content">
-//             <Search
-//               className="Header-Search-Bar"
-//               size="large"
-//               // placeholder="find player..."
-//               onSearch={onSearch}
-//             />
-//           </div>
-//         </div>
-//         <div className="Search-Header-Right">
-//           <Button
-//             type="primary"
-//             block
-//             htmlType="submit"
-//             shape="circle"
-//             size="large"
-//             className="Search-Header-Button"
-//             onClick={handleToProfile}
-//           >
-//             {/* Profile */}
-//             {/* <img url={require("../images/face.jpeg")} /> */}
-//             <UserOutlined />
-//           </Button>
-//         </div>
-//       </div>
-//       <InviteModal
-//         open={modalOpen}
-//         player={playerInvited}
-//         onCancel={() => {
-//           setModalOpen(false);
-//         }}
-//         setOpen={setModalOpen}
-//         myPlayerName={myPlayerName}
-//       />
-//       <InvitationModal
-//         open={invitationModalOpen}
-//         setOpen={setInvitationModalOpen}
-//         myPlayerName={myPlayerName}
-//         setInvitationReadNum={setInvitationReadNum}
-//       />
-//       <div className="Search-Content">
-//         <div className="Search-Content-Left">
-//             <Filter
-//               laneFilter={laneFilter}
-//               setLaneFilter={setLaneFilter}
-//               rankFilter={rankFilter}
-//               setRankFilter={setRankFilter}
-//             />
-//         </div>
-//         <div className="Search-Content-Right">
-//             <div className="Search-Content-Right-Header">
-//               <Button
-//                 icon={<RedoOutlined />}
-//                 onClick={() => window.location.reload()}
-//               />
-//               <div
-//                 className="Search-Content-Right-Header-Text"
-//               >
-//                 Last updated:{ShowTime()}
-//               </div>
-//             </div>
-//             <div className="Search-Content-Right-Table">
-//               <Table
-//                 columns={columns(handleInvite)}
-//                 dataSource={players}
-//                 className="table"
-//               />
-//             </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Search;

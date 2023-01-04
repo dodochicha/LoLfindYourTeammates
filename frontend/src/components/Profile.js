@@ -7,7 +7,7 @@ import { GET_PLAYERS_QUERY } from "../graphql/queries";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useState, useEffect } from "react";
-import { Form, Input, Select, Button, Layout, Space, Tag } from "antd";
+import { Form, Input, Select, Button, Layout, Space, Tag, Tooltip } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import heroes_eng from "../utils/heros_eng";
 import heroes from "../utils/heros";
@@ -223,17 +223,19 @@ function Profile() {
               {username}'s Profile{" "}
             </Header>
             <div className="Profile-Form-Header-Button-Frame">
-              <Button
-                type="primary"
-                block
-                htmlType="submit"
-                shape="circle"
-                icon={<SearchOutlined />}
-                onClick={handleToSearch}
-                className="Profile-Form-Header-Button"
-              >
-                {/* Search */}
-              </Button>
+              <Tooltip title="Search">
+                <Button
+                  type="primary"
+                  block
+                  htmlType="submit"
+                  shape="circle"
+                  icon={<SearchOutlined />}
+                  onClick={handleToSearch}
+                  className="Profile-Form-Header-Button"
+                >
+                  {/* Search */}
+                </Button>
+              </Tooltip>
             </div>
           </div>
           <Form

@@ -53,12 +53,9 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
         }}
       > */}
         <Title
-          level={3}
-          style={{
-            textAlign: "center",
-            color: "rgba(16, 17, 20, 1)",
-            margin: 0
-          }}
+          level={4}
+          className="Filter-Title"
+          style={{color:"white"}}
         >
           Custom conditions
         </Title>
@@ -83,7 +80,7 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
             size="large"
           >
             <Form.Item
-              label={<label style={{ fontSize: "20px", color: "rgba(16, 17, 20, 1)"}}>Lane:</label>}
+              label={<label className="Filter-Label">Lane:</label>}
               name="lane"
             >
               <Select
@@ -96,11 +93,10 @@ const Filter = ({ laneFilter, setLaneFilter, rankFilter, setRankFilter }) => {
                 onChange={(e) => {
                   setLaneFilter(e);
                 }}
-                dropdownStyle={{ backgroundColor: "rgb(43, 45, 53)", color: "white" }}
               />
             </Form.Item>
             <Form.Item
-              label={<label style={{ fontSize: "20px", color: "rgba(16, 17, 20, 1)" }}>Rank:</label>}
+              label={<label className="Filter-Label">Rank:</label>}
               name="date"
             >
               <Select

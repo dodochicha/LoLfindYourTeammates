@@ -7,6 +7,26 @@
     font-weight: 400;
 }
 
+.Filter-Title {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 42px;
+    color: white;
+}
+
+.Filter-Label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 27px;
+    text-align: center;
+
+    color: white;
+}
+
 .ant-select-selector:hover, .ant-select-selector:focus-within {
     border: 2px solid #8B00FF !important;
 }

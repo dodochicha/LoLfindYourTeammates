@@ -124,10 +124,8 @@ router.get("/getProfile", async (req, res) => {
 
 router.get("/getProfileById", async (req, res) => {
   try {
-    console.log("TEST:", req.query.id)
     let player = await Player.findOne({ id: req.query.id });
     if (player !== null) {
-      console.log("hello")
       return res.json({
         id: player.id,
         name: player.name,

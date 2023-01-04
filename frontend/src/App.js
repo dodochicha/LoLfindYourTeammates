@@ -12,7 +12,6 @@ import Home from "./components/Home";
 import "./App.css";
 import Profile from "./components/Profile";
 import Search from "./components/Search";
-import Search2 from "./components/Search2";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Player from "./components/Player";
@@ -32,7 +31,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<ProtectedRoute isAllowed={!!authentication} />}>
               <Route path="/search" element={<Search />} />
-              <Route path="/search2" element={<Search2 />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
             <Route path="/player/:id" element={<Player />} />
